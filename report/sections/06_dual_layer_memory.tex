@@ -1,0 +1,86 @@
+\section{Dual-Layer Memory Infrastructure}
+\label{sec:dual_layer_memory}
+
+State management across multi-agent pipelines requires balancing intermediate data sharing against cross-vignette state isolation. Passing extensive execution histories through prompt contexts increases token expenditure and introduces context drift. MedRAGAgents resolves this via a dual-layer memory infrastructure coordinated by \texttt{MemoryManager}.
+
+\subsection{Short-Term In-RAM Memory Bus (\texttt{ShortTermMemory})}
+
+The short-term memory layer acts as a transient in-RAM key-value scratchpad during the execution of a single clinical vignette. It provides a shared data bus for intermediate artifacts—such as domain classifications, specialty analyses, retrieved textbook snippets, and verification vote histories—enabling seamless data transfer between agents without requiring direct inter-agent coupling.
+
+Figure~\ref{fig:short_term_bus} illustrates the operational lifecycle of the \texttt{ShortTermMemory} bus.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  \node [monobox] (start) {Vignette Execution\\Initiated};
+  \node [monobox, right=1.2cm of start] (reset) {\texttt{reset\_short()}\\Purge Storage};
+  \node [monobox, right=1.2cm of reset] (bus) {\texttt{ShortTermMemory}\\Data Bus};
+  
+  \node [monobox, above right=0.6cm and 1.2cm of bus] (write) {Agent Writes\\(\texttt{store(k, v)})};
+  \node [monobox, below right=0.6cm and 1.2cm of bus] (read) {Agent Reads\\(\texttt{get(k)})};
+  
+  \node [monobox, right=1.2cm of write] (keys) {Keys:\\\texttt{"q\_domains"}, \texttt{"o\_domains"}\\\texttt{"q\_analyses"}, \texttt{"syn\_report"}};
+
+  \draw [monoline] (start) -- (reset);
+  \draw [monoline] (reset) -- (bus);
+  \draw [monoline] (bus.east) |- (write.west);
+  \draw [monoline] (bus.east) |- (read.west);
+  \draw [monoline] (write) -- (keys);
+\end{tikzpicture}%
+}
+\caption{Short-Term Memory Bus Operational Lifecycle.}
+\label{fig:short_term_bus}
+\end{figure}
+
+The \texttt{ShortTermMemory} interface exposes four primary methods:
+\begin{itemize}
+    \item \texttt{store(key, value)}: Persists an intermediate artifact under a string key.
+    \item \texttt{get(key, default)}: Retrieves a stored artifact, returning a default fallback if the key is missing.
+    \item \texttt{clear()}: Purges all stored keys, called via \texttt{reset\_short()} at the start of each new vignette.
+    \item \texttt{snapshot()}: Returns an immutable copy of the memory store for logging and debugging.
+\end{itemize}
+
+\subsection{Long-Term Persistent Storage (\texttt{LongTermMemory})}
+
+The long-term memory layer provides disk-backed persistence to bypass redundant computation on previously evaluated clinical vignettes. Predictions are cached in a structured JSON file at \texttt{./memory/long\_term\_cache.json}.
+
+Figure~\ref{fig:long_term_cache} illustrates the key generation and lookup lifecycle for \texttt{LongTermMemory}.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  \node [monobox] (input) {Question ($q$) +\\Options ($\mathcal{O}_q$) Payload};
+  \node [monobox, right=1.2cm of input] (canonical) {Canonical String:\\\texttt{q.strip() + str(options)}};
+  \node [monobox, right=1.2cm of canonical] (sha) {SHA-256 Digest:\\First 16 Hex Chars};
+  
+  \node [monodiamond, right=1.2cm of sha] (cache_check) {Cache Digest\\Hit?};
+  
+  \node [monobox, above right=0.6cm and 1.2cm of cache_check] (hit) {Return Cached Result\\(0ms, 0 tokens)};
+  \node [monobox, below right=0.6cm and 1.2cm of cache_check] (miss) {Execute Full V3\\Pipeline Execution};
+  
+  \node [monobox, right=1.2cm of miss] (store) {Store Result \& Autosave\\(\texttt{save()})};
+
+  \draw [monoline] (input) -- (canonical);
+  \draw [monoline] (canonical) -- (sha);
+  \draw [monoline] (sha) -- (cache_check);
+  \draw [monoline] (cache_check.east) |- node [above] {YES} (hit.west);
+  \draw [monoline] (cache_check.east) |- node [below] {NO} (miss.west);
+  \draw [monoline] (miss) -- (store);
+\end{tikzpicture}%
+}
+\caption{Long-Term Memory SHA-256 Hashing and Cache Lookup Lifecycle.}
+\label{fig:long_term_cache}
+\end{figure}
+
+The cache key generation function $\mathbf{H}_{\text{key}}(q, \mathcal{O}_q)$ guarantees deterministic key assignment:
+
+\begin{equation}
+    S_{\text{canonical}} = \text{strip}(q) \;\|\; \text{str}(\mathcal{O}_q)
+\end{equation}
+\begin{equation}
+    \mathbf{H}_{\text{key}}(q, \mathcal{O}_q) = \text{SHA256}(S_{\text{canonical}})[0:16]
+\end{equation}
+
+When a key hit occurs ($\text{Lookup}(\mathbf{H}_{\text{key}}) \neq \emptyset$), the system returns the cached prediction record directly, setting \texttt{from\_cache = True}. This mechanism reduces execution latency to 0ms and token expenditure to zero for duplicate evaluations.

@@ -1,0 +1,158 @@
+\section{Multi-Specialty Agent Decomposition Engine}
+\label{sec:multi_agent_engine}
+
+The core cognitive engine of MedRAGAgents relies on an ensemble of specialized domain agents working in concert to analyze clinical vignettes. Rather than forcing a single foundation model prompt to perform multi-domain reasoning simultaneously, the workload is distributed across specialized reasoning components.
+
+\subsection{Domain Classification Agent (\texttt{DomainAgent})}
+
+The \texttt{DomainAgent} acts as the front-end classifier for clinical vignettes. Its objective is to analyze the raw clinical text and extract relevant medical subspecialties for both the vignette body and candidate options.
+
+Figure~\ref{fig:domain_routing} illustrates the domain classification workflow.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.5cm, auto]
+  \node [monobox] (vignette) {Clinical Vignette +\\Options Payload};
+  \node [monobox, right=of vignette] (domain_agent) {\texttt{DomainAgent}\\Classifier};
+  
+  \node [monobox, above right=0.6cm and 1.2cm of domain_agent] (q_domains) {Question Domains\\(Max 5 Specialties)};
+  \node [monobox, below right=0.6cm and 1.2cm of domain_agent] (o_domains) {Option Domains\\(Max 2 Specialties)};
+  
+  \node [monobox, right=1.2cm of q_domains] (q_store) {Store in \texttt{ShortTermMemory}\\(\texttt{"q\_domains"})};
+  \node [monobox, right=1.2cm of o_domains] (o_store) {Store in \texttt{ShortTermMemory}\\(\texttt{"o\_domains"})};
+
+  \draw [monoline] (vignette) -- (domain_agent);
+  \draw [monoline] (domain_agent.east) |- (q_domains.west);
+  \draw [monoline] (domain_agent.east) |- (o_domains.west);
+  \draw [monoline] (q_domains) -- (q_store);
+  \draw [monoline] (o_domains) -- (o_store);
+\end{tikzpicture}%
+}
+\caption{Domain Classification Routing Workflow.}
+\label{fig:domain_routing}
+\end{figure}
+
+The classification process executes in two distinct operations:
+\begin{enumerate}
+    \item \textbf{Question Domain Classification} (\texttt{classify\_question\_domains}): Maps the clinical vignette to up to five primary medical domains (e.g., Cardiology, Nephrology, Medical Microbiology, Pharmacology, Pathology).
+    \item \textbf{Option Domain Classification} (\texttt{classify\_option\_domains}): Analyzes candidate choices against the vignette context to identify up to two secondary specialties relevant to option differentiation.
+\end{enumerate}
+
+\subsection{Specialized Domain Analysis Agents (\texttt{AnalysisAgent})}
+
+Once subspecialties are identified, the \texttt{AnalysisAgent} executes isolated specialty evaluations. This stage prevents cross-domain context contamination by restricting each prompt invocation to a single specialty perspective.
+
+Figure~\ref{fig:parallel_dag} displays the execution Directed Acyclic Graph (DAG) for parallel specialty analyses.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.5cm, auto]
+  \node [monobox] (active_domains) {Active Domain Set\\$\mathcal{D}_{\text{active}}$};
+  
+  \node [monobox, right=1.5cm of active_domains, yshift=1.5cm] (agent1) {Pathology Expert\\Analysis};
+  \node [monobox, right=1.5cm of active_domains, yshift=0.5cm] (agent2) {Pharmacology Expert\\Analysis};
+  \node [monobox, right=1.5cm of active_domains, yshift=-0.5cm] (agent3) {Neurology Expert\\Analysis};
+  \node [monobox, right=1.5cm of active_domains, yshift=-1.5cm] (agent4) {Option-Specific\\Domain Analysis};
+  
+  \node [monobox, right=2.0cm of agent2, yshift=-0.5cm] (aggregator) {Analysis Dictionary\\Aggregation};
+
+  \draw [monoline] (active_domains.east) |- (agent1.west);
+  \draw [monoline] (active_domains.east) |- (agent2.west);
+  \draw [monoline] (active_domains.east) |- (agent3.west);
+  \draw [monoline] (active_domains.east) |- (agent4.west);
+  
+  \draw [monoline] (agent1.east) -| (aggregator.north);
+  \draw [monoline] (agent2.east) -- (aggregator.west);
+  \draw [monoline] (agent3.east) -- (aggregator.west);
+  \draw [monoline] (agent4.east) -| (aggregator.south);
+\end{tikzpicture}%
+}
+\caption{Multi-Agent Parallel Specialty Analysis Execution DAG.}
+\label{fig:parallel_dag}
+\end{figure}
+
+The analysis phase operates in two stages:
+\begin{itemize}
+    \item \textbf{Question Specialty Analysis}: Each question domain specialist evaluates the vignette independently, extracting pertinent clinical findings, lab abnormalities, and pathophysiological mechanisms.
+    \item \textbf{Option Specialty Analysis}: Option specialists evaluate each candidate option against the vignette and the prior question analyses, assessing diagnostic plausibility and contraindications.
+\end{itemize}
+
+\subsection{Diagnostic Synthesis Engine (\texttt{SynthesisAgent})}
+
+The \texttt{SynthesisAgent} aggregates outputs from all specialty analysis agents along with retrieved textbook evidence snippets, producing a unified diagnostic report.
+
+Figure~\ref{fig:synthesis_flow} illustrates the evidence integration flow.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.5cm, auto]
+  \node [monobox] (q_ana) {Question Specialty\\Analyses};
+  \node [monobox, below=0.6cm of q_ana] (o_ana) {Option Specialty\\Analyses};
+  \node [monobox, below=0.6cm of o_ana] (rag_snip) {MedCPT Retrieved\\Textbook Snippets};
+  
+  \node [monobox, right=1.5cm of o_ana] (synth) {\texttt{SynthesisAgent}\\Engine};
+  \node [monobox, right=1.5cm of synth] (report) {Unified Diagnostic\\Synthesis Report};
+
+  \draw [monoline] (q_ana.east) -| (synth.north);
+  \draw [monoline] (o_ana.east) -- (synth.west);
+  \draw [monoline] (rag_snip.east) -| (synth.south);
+  \draw [monoline] (synth.east) -- (report.west);
+\end{tikzpicture}%
+}
+\caption{Diagnostic Synthesis and Evidence Fusion Architecture.}
+\label{fig:synthesis_flow}
+\end{figure}
+
+The synthesis report presents a complete diagnostic breakdown, including:
+\begin{enumerate}
+    \item Summary of key clinical findings and lab data.
+    \item Differential diagnosis ranking across candidate options.
+    \item Explicit rejection rationales for incorrect distractors.
+    \item Definitive option selection based on combined clinical evidence.
+\end{enumerate}
+
+\subsection{Consensus Verification and Voting Protocol (\texttt{VerifierAgent})}
+
+The \texttt{VerifierAgent} manages an iterative peer-verification consensus loop. Rather than accepting the synthesis report without validation, specialty agents review the report, vote on its diagnostic validity, and request revisions if discrepancies exist.
+
+Figure~\ref{fig:verifier_fsm} depicts the finite state machine governing consensus verification.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.5cm, auto]
+  \node [monobox] (start) {Synthesis Report\\Generated};
+  \node [monobox, right=of start] (vote) {Specialty Voting\\(\texttt{\_vote()})};
+  \node [monodiamond, right=of vote] (check) {Unanimous\\Consensus?};
+  
+  \node [monobox, above=1.2cm of check] (advice) {Collect Revision\\Advice (\texttt{\_get\_advice()})};
+  \node [monobox, left=of advice] (revise) {Revise Report\\(\texttt{\_revise()})};
+  
+  \node [monobox, right=1.5cm of check] (final) {Extract Final Option\\(\texttt{\_derive\_final\_answer()})};
+
+  \draw [monoline] (start) -- (vote);
+  \draw [monoline] (vote) -- (check);
+  \draw [monoline] (check) -- node [above] {YES} (final);
+  
+  \draw [monoline] (check) -- node [right] {NO ($t < 3$)} (advice);
+  \draw [monoline] (advice) -- (revise);
+  \draw [monoline] (revise.south) -- (vote.north);
+
+  \draw [monoline] (check.south) -- ++(0,-1.0) -| (final.south) node[pos=0.25, below] {Max Rounds ($t=3$)};
+\end{tikzpicture}%
+}
+\caption{Consensus Verification Finite State Machine Loop.}
+\label{fig:verifier_fsm}
+\end{figure}
+
+The verification protocol executes as follows:
+\begin{enumerate}
+    \item \textbf{Voting Pass} (\texttt{\_vote}): Each active specialty domain node reviews the current synthesis report and submits a binary vote (\texttt{YES} / \texttt{NO}).
+    \item \textbf{Consensus Check}: If all domain nodes vote \texttt{YES}, the consensus loop terminates successfully.
+    \item \textbf{Advice Generation} (\texttt{\_get\_advice}): If any domain node votes \texttt{NO}, dissenting domain nodes provide targeted revision recommendations identifying factual errors or logical oversights.
+    \item \textbf{Report Revision} (\texttt{\_revise}): The synthesis report is updated based on dissenting feedback, and the verification loop increments to round $t+1$.
+    \item \textbf{Termination and Derivation} (\texttt{\_derive\_final\_answer}): The loop terminates upon reaching unanimous consensus or completing $t=3$ rounds. The final option letter (A--E) is extracted via structured regex parsing.
+\end{enumerate}

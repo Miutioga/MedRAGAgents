@@ -1,0 +1,9 @@
+\contentsline {table}{\numberline {1}{\ignorespaces System Requirements Compliance Matrix for MedRAGAgents.}}{5}{table.caption.1}%
+\contentsline {table}{\numberline {2}{\ignorespaces MedRAG Textbooks Vector Index Specifications.}}{14}{table.caption.8}%
+\contentsline {table}{\numberline {3}{\ignorespaces Feature Comparison Matrix Across System Variants (V0--V3).}}{19}{table.caption.14}%
+\contentsline {table}{\numberline {4}{\ignorespaces Paired Outcome Contingency Matrix for McNemar Test.}}{24}{table.caption.15}%
+\contentsline {table}{\numberline {5}{\ignorespaces Empirical Performance Comparison Across System Variants on MedQA-USMLE.}}{25}{table.caption.16}%
+\contentsline {table}{\numberline {6}{\ignorespaces Paired Win/Loss Contingency Matrix and McNemar Test Summary (V0 vs V3).}}{25}{table.caption.17}%
+\contentsline {table}{\numberline {7}{\ignorespaces Average Computational Latency and Token Consumption Profile per Vignette.}}{26}{table.caption.18}%
+\contentsline {table}{\numberline {8}{\ignorespaces Diagnostic Failure Mode Taxonomy and Recovery Strategies.}}{27}{table.caption.19}%
+\contentsline {table}{\numberline {9}{\ignorespaces Command-Line Interface Parameter Specifications for \texttt {run.py}.}}{29}{table.caption.21}%

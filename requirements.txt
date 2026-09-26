@@ -1,0 +1,26 @@
+# MedRAGAgents requirements
+# Core
+google-generativeai>=0.7.0
+openai>=1.0.0
+anthropic>=0.25.0
+python-dotenv>=1.0.0
+
+# Data & evaluation
+jsonlines>=4.0.0
+tqdm>=4.66.0
+numpy>=1.26.0
+scipy>=1.12.0
+
+# NLP utilities
+nltk>=3.8.0
+rouge-score>=0.1.2
+tiktoken>=0.6.0
+
+# RAG / retrieval
+faiss-cpu>=1.7.4
+sentence-transformers>=2.6.0
+transformers>=4.40.0
+torch>=2.1.0
+
+# Liquid templates (MedRAG)
+python-liquid>=1.12.0

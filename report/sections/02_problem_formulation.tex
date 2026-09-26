@@ -1,0 +1,78 @@
+\section{Domain Context and Problem Formulation}
+\label{sec:problem_formulation}
+
+Standardized medical licensing examinations present complex clinical vignettes that require systemic diagnostic reasoning. Each instance in the MedQA-USMLE dataset consists of a clinical vignette, a set of candidate choices, and a single ground-truth gold answer.
+
+\subsection{Formal Mathematical Definition}
+
+Let $\mathcal{Q}$ denote the universe of clinical vignettes, where each question $q \in \mathcal{Q}$ is represented as a sequence of natural language tokens:
+\begin{equation}
+    q = (w_1, w_2, \dots, w_{|q|})
+\end{equation}
+
+For each clinical question $q$, there exists a discrete set of options $\mathcal{O}_q = \{o_1, o_2, \dots, o_M\}$, where $M \in \{4, 5\}$ denotes the number of available candidate choices. Each candidate option $o_m \in \mathcal{O}_q$ represents a clinical entity, diagnostic test, therapeutic intervention, or pathological mechanism.
+
+The true clinical target is denoted by $y^* \in \mathcal{O}_q$. The system task is defined as learning a decision function $\mathbf{F}: \mathcal{Q} \times \mathcal{O}_q \to \mathcal{O}_q$ that maps the tuple $(q, \mathcal{O}_q)$ to a single predicted choice $\hat{y} \in \mathcal{O}_q$:
+
+\begin{equation}
+    \hat{y} = \mathbf{F}(q, \mathcal{O}_q; \mathbf{\Theta}, \mathcal{K})
+\end{equation}
+where $\mathbf{\Theta}$ represents the static parameter weights of the underlying generative transformer engine, and $\mathcal{K}$ represents an external biomedical knowledge corpus.
+
+\subsection{Multi-Specialty Domain Mapping}
+
+Clinical vignettes possess high structural heterogeneity. A single vignette spans multiple clinical subspecialties. To model this subspecialty distribution, we define a finite set of $D$ medical domain labels $\mathcal{D} = \{d_1, d_2, \dots, d_D\}$, such as Pharmacology, Pathology, Medical Ethics, Cardiology, and Surgical Specialties.
+
+We define two domain classification mapping functions, $\mathbf{g}_q$ and $\mathbf{g}_o$:
+
+\begin{equation}
+    \mathbf{g}_q: \mathcal{Q} \to \mathcal{P}(\mathcal{D}), \quad \text{subject to } |\mathbf{g}_q(q)| \le K_q
+\end{equation}
+\begin{equation}
+    \mathbf{g}_o: \mathcal{Q} \times \mathcal{O}_q \to \mathcal{P}(\mathcal{D}), \quad \text{subject to } |\mathbf{g}_o(q, \mathcal{O}_q)| \le K_o
+\end{equation}
+where $\mathcal{P}(\mathcal{D})$ is the power set of domain labels, and $K_q = 5, K_o = 2$ represent empirical upper bounds on domain cardinality for questions and candidate choices respectively.
+
+The active specialty set $\mathcal{D}_{\text{active}}$ for a given vignette $(q, \mathcal{O}_q)$ is the union of question and option domain sets:
+\begin{equation}
+    \mathcal{D}_{\text{active}} = \mathbf{g}_q(q) \cup \mathbf{g}_o(q, \mathcal{O}_q)
+\end{equation}
+
+\subsection{Dense Vector Retrieval Formulation}
+
+External biomedical knowledge is retrieved from a preprocessed textbook corpus $\mathcal{K} = \{c_1, c_2, \dots, c_N\}$, where each chunk $c_i$ contains up to 512 tokens. A dual-encoder embedding network $\mathbf{E} = (\mathbf{E}_Q, \mathbf{E}_D)$ projects queries and document passages into a shared high-dimensional vector space $\mathbb{R}^d$ ($d=768$).
+
+Given a clinical vignette $q$, the query vector $\mathbf{v}_q \in \mathbb{R}^d$ and document vectors $\mathbf{v}_{c_i} \in \mathbb{R}^d$ are computed via:
+\begin{equation}
+    \mathbf{v}_q = \mathbf{E}_Q(q), \quad \mathbf{v}_{c_i} = \mathbf{E}_D(c_i)
+\end{equation}
+
+The relevance score $S(q, c_i)$ between query $q$ and document chunk $c_i$ is evaluated using cosine similarity:
+\begin{equation}
+    S(q, c_i) = \frac{\mathbf{v}_q \cdot \mathbf{v}_{c_i}}{\|\mathbf{v}_q\|_2 \|\mathbf{v}_{c_i}\|_2}
+\end{equation}
+
+The retrieval module returns the top-$K$ scoring text passages $\mathcal{R}_K(q)$:
+\begin{equation}
+    \mathcal{R}_K(q) = \text{Top-}K_{c_i \in \mathcal{K}} \left( S(q, c_i) \right), \quad K = 32
+\end{equation}
+
+\subsection{Iterative Consensus Voting Model}
+
+The consensus verification protocol functions as a discrete-time voting game among domain expert nodes $d_j \in \mathcal{D}_{\text{active}}$. At verification iteration $t \in \{1, \dots, T_{\max}\}$, each domain node receives the synthesized diagnostic report $R^{(t-1)}$ and emits a binary consensus vote $v_{j}^{(t)} \in \{0, 1\}$ ($\text{NO} = 0, \text{YES} = 1$) along with revision feedback $a_{j}^{(t)}$:
+
+\begin{equation}
+    (v_{j}^{(t)}, a_{j}^{(t)}) = \mathbf{H}_{v}\left( R^{(t-1)}, d_j, q, \mathcal{O}_q \right)
+\end{equation}
+
+Consensus is reached at iteration $t$ if and only if all active specialty nodes cast affirmative votes:
+\begin{equation}
+    \mathcal{C}^{(t)} = \prod_{j=1}^{|\mathcal{D}_{\text{active}}|} v_{j}^{(t)} = 1
+\end{equation}
+
+If $\mathcal{C}^{(t)} = 0$ and $t < T_{\max}$, a revision node $\mathbf{H}_r$ updates the synthesis report:
+\begin{equation}
+    R^{(t)} = \mathbf{H}_r\left( R^{(t-1)}, \{a_{j}^{(t)} \mid v_{j}^{(t)} = 0\} \right)
+\end{equation}
+
+If $t = T_{\max} = 3$ without absolute consensus, the final decision node extracts the prediction $\hat{y}$ from the latest available synthesis report $R^{(T_{\max})}$.

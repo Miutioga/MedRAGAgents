@@ -1,0 +1,342 @@
+{
+  "9d97215418089194": {
+    "pred_answer": "B",
+    "question_domains": [
+      "Classify the",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "General Medicine",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A junior orthopaedic surgery resident is completing a carpal tunnel repair with the department chairman as the attending physician. During the case, the resident inadvertently cuts a flexor tendon. The tendon is repaired without complication. The attending tells the resident that the patient will do fine, and there is no need to report this minor complication that will not harm the patient, as he does not want to make the patient worry unnecessarily. He tells the resident to leave this complication out of the operative report. Which of the following is the correct next action for the resident to take?\nOptions: A. Disclose the error to the patient but leave it out of the operative report\nB. Disclose the error to the patient and put it in the operative report\nC. Tell the attending that he cannot fail to disclose this mistake\nD. Report the physician to the ethics committee\nE. Refuse to dictate the operative report\nKey Knowledge: - Principles of medical ethics and professional accountability mandate full transparency and complete truth-telling regarding surgical complications and intraoperative errors.\n- Operative reports are official legal medical records; accurate and complete documentation of all intraoperative events—including inadvertent injuries and subsequent repairs—is required.\n- Resident physicians must adhere to ethical guidelines regarding medical accuracy and disclosure to the patient, even when instructed otherwise by an attending physician or department superior.\nTotal Analysis: The case outlines an ethical dilemma involving a junior surgical resident who inadvertently cuts a flexor tendon during a carpal tunnel repair. Although the attending department chairman advises omitting the event from the operative report and withholding disclosure to spare the patient anxiety, medical ethics strictly prohibit falsifying medical records or concealing surgical complications. \n\nPhysicians have an ethical and legal obligation to maintain precise, honest medical records and to ensure full disclosure of surgical complications to patients. Accurate documentation in the operative report is crucial for ongoing patient safety, accurate post-operative follow-up, and continuity of care. Consequently, the correct course of action is for the resident to properly document the inadvertent tendon laceration and its repair in the official operative report and ensure the error is truthfully disclosed to the patient (Option B).'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:39:49.326030"
+  },
+  "3cb2dee744eebb3d": {
+    "pred_answer": "E",
+    "question_domains": [
+      "Oncology",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "Oncology",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 67-year-old man with transitional cell carcinoma of the bladder comes to the physician because of a 2-day history of ringing sensation in his ear. He received this first course of neoadjuvant chemotherapy 1 week ago. Pure tone audiometry shows a sensorineural hearing loss of 45 dB. The expected beneficial effect of the drug that caused this patient's symptoms is most likely due to which of the following actions?\nOptions: A. Inhibition of thymidine synthesis\nB. Inhibition of proteasome\nC. Hyperstabilization of microtubules\nD. Generation of free radicals\nE. Cross-linking of DNA\nKey Knowledge: 1. Clinical Scenario: A 67-year-old male with transitional cell carcinoma of the bladder presenting with tinnitus and sensorineural hearing loss (45 dB) 1 week after starting neoadjuvant chemotherapy.\n2. Culprit Agent: Platinum-based chemotherapy, specifically Cisplatin, is a core component of neoadjuvant regimens for muscle-invasive bladder cancer and is notorious for dose-dependent ototoxicity (tinnitus and high-frequency sensorineural hearing loss) as well as nephrotoxicity.\n3. Mechanism of Action: Cisplatin's antineoplastic/therapeutic effect occurs via covalent binding to DNA bases, creating intra-strand and inter-strand DNA cross-links. This disrupts DNA structure, inhibits DNA replication and transcription, and triggers apoptosis in rapidly dividing malignant cells.\nTotal Analysis: The patient's clinical presentation of bilateral tinnitus and sensorineural hearing loss following chemotherapy for bladder carcinoma is a classic manifestation of Cisplatin-induced ototoxicity. Cisplatin exerts its therapeutic antineoplastic effect primarily by forming intra-strand and inter-strand cross-links in DNA, which impairs DNA synthesis and cell division, driving cancer cell apoptosis. \n\nEvaluating the options:\n- Option A (Inhibition of thymidine synthesis): Relates to 5-Fluorouracil or Methotrexate.\n- Option B (Inhibition of proteasome): Relates to Bortezomib.\n- Option C (Hyperstabilization of microtubules): Relates to Taxanes (e.g., Paclitaxel).\n- Option D (Generation of free radicals): Relates to Bleomycin or Anthracyclines (e.g., Doxorubicin).\n- Option E (Cross-linking of DNA): Accurately describes the mechanism of action of Cisplatin.\n\nTherefore, the expected beneficial antineoplastic effect of Cisplatin is due to the cross-linking of DNA (Option E).'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:40:44.268423"
+  },
+  "bafa39c48ba14c0d": {
+    "pred_answer": "C",
+    "question_domains": [
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "Medical Field",
+      "General Medicine"
+    ],
+    "syn_report": "Question: Two weeks after undergoing an emergency cardiac catherization with stenting for unstable angina pectoris, a 61-year-old man has decreased urinary output and malaise. He has type 2 diabetes mellitus and osteoarthritis of the hips. Prior to admission, his medications were insulin and naproxen. He was also started on aspirin, clopidogrel, and metoprolol after the coronary intervention. His temperature is 38°C (100.4°F), pulse is 93/min, and blood pressure is 125/85 mm Hg. Examination shows mottled, reticulated purplish discoloration of the feet. Laboratory studies show:\nHemoglobin count 14 g/dL\nLeukocyte count 16,400/mm3\nSegmented neutrophils 56%\nEosinophils 11%\nLymphocytes 31%\nMonocytes 2%\nPlatelet count 260,000/mm3\nErythrocyte sedimentation rate 68 mm/h\nSerum\nUrea nitrogen 25 mg/dL\nCreatinine 4.2 mg/dL\nRenal biopsy shows intravascular spindle-shaped vacuoles. Which of the following is the most likely cause of this patient's symptoms?\"\nOptions: A. Renal papillary necrosis\nB. Allergic interstitial nephritis\nC. Cholesterol embolization\nD. Eosinophilic granulomatosis with polyangiitis\nE. Polyarteritis nodosa\nKey Knowledge: 1. **Clinical Context**: Recent history of an invasive arterial procedure (e.g., cardiac catheterization 2 weeks ago) is a major predisposing risk factor for plaque disruption and atheroembolism.\n2. **Clinical Presentation**: Atheroembolic disease (cholesterol embolization syndrome) classically presents with acute or subacute renal failure, peripheral cutaneous manifestations (livedo reticularis/mottled purplish discoloration of the lower extremities, \"blue toe syndrome\"), fever, and malaise.\n3. **Laboratory Findings**: Laboratory studies typically show eosinophilia, elevated inflammatory markers (ESR), and acute kidney injury (markedly elevated serum creatinine and urea nitrogen).\n4. **Histopathological Hallmark**: Renal biopsy characteristically demonstrates intravascular spindle-shaped or biconvex needle-like clefts/vacuoles representing cholesterol crystals that dissolved during formalin tissue preparation.\nTotal Analysis: The patient is a 61-year-old male presenting two weeks after coronary angiography and stenting with acute kidney injury (decreased urine output, creatinine 4.2 mg/dL), systemic symptoms (fever, malaise), peripheral cutaneous findings (livedo reticularis described as mottled, reticulated purplish discoloration of the feet), elevated ESR, and prominent eosinophilia (11%). \n\nThis constellation of post-catheterization features is pathognomonic for atheroembolic renal disease (cholesterol embolization syndrome). During endovascular procedures, mechanical manipulation of the aorta or peripheral arteries dislodges atherosclerotic plaque material, resulting in microembolization of cholesterol crystals to distal small arteries, such as renal interlobular and arcuate arteries. The renal biopsy confirms this diagnosis by revealing intravascular spindle-shaped vacuoles (cholesterol clefts left behind after lipids are extracted during standard histological preparation). \n\nWhile allergic interstitial nephritis can present with eosinophilia and acute kidney injury, it lacks the pathognomonic vascular biopsy findings and classical livedo reticularis. Other vasculitides (such as eosinophilic granulomatosis with polyangiitis or polyarteritis nodosa) do not show intravascular cholesterol clefts on biopsy. Therefore, the most likely diagnosis is cholesterol embolization (Option C).'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:41:43.330900"
+  },
+  "632ad65bb16f08fa": {
+    "pred_answer": "D",
+    "question_domains": [
+      "9-year",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "Medical Field",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 39-year-old woman is brought to the emergency department because of fevers, chills, and left lower quadrant pain. Her temperature is 39.1°C (102.3°F), pulse is 126/min, respirations are 28/min, and blood pressure is 80/50 mm Hg. There is blood oozing around the site of a peripheral intravenous line. Pelvic examination shows mucopurulent discharge from the cervical os and left adnexal tenderness. Laboratory studies show:\nPlatelet count 14,200/mm3\nFibrinogen 83 mg/mL (N = 200–430 mg/dL)\nD-dimer 965 ng/mL (N < 500 ng/mL)\nWhen phenol is applied to a sample of the patient's blood at 90°C, a phosphorylated N-acetylglucosamine dimer with 6 fatty acids attached to a polysaccharide side chain is identified. A blood culture is most likely to show which of the following?\"\nOptions: A. Coagulase-positive, gram-positive cocci forming mauve-colored colonies on methicillin-containing agar\nB. Encapsulated, gram-negative coccobacilli forming grey-colored colonies on charcoal blood agar\nC. Spore-forming, gram-positive bacilli forming yellow colonies on casein agar\nD. Lactose-fermenting, gram-negative rods forming pink colonies on MacConkey agar\nE. Gamma-hemolytic, gram-positive cocci forming green colonies on vancomycin agar\nKey Knowledge: - **Clinical Scenario**: The patient presents with septic shock (fever, tachycardia, hypotension) and Disseminated Intravascular Coagulation (DIC) as evidenced by oozing from the IV site, severe thrombocytopenia (14,200/mm³), hypofibrinogenemia (83 mg/dL), and elevated D-dimer (965 ng/mL), secondary to pelvic inflammatory disease/intra-abdominal pelvic infection.\n- **Biochemical Identification**: A phosphorylated N-acetylglucosamine dimer with attached fatty acids linked to a polysaccharide chain describes **Lipid A**, the active endotoxin component of Lipopolysaccharide (LPS).\n- **Microbiological Link**: Lipid A is found specifically in the outer membrane of **Gram-negative bacteria**. Lipid A activation of macrophages via TLR4 causes massive cytokine release (TNF-alpha, IL-1, IL-6), precipitating septic shock and DIC.\n- **Causal Organism**: *Escherichia coli* is a common Gram-negative pathogen responsible for pelvic and urinary tract infections leading to sepsis, characterized as a **lactose-fermenting, Gram-negative rod that forms pink colonies on MacConkey agar**.\nTotal Analysis: The patient's clinical picture of fever, left lower quadrant pain, cervical discharge, and adnexal tenderness indicates severe pelvic inflammatory disease complicated by septic shock and disseminated intravascular coagulation (DIC). The laboratory evidence of low platelets, depleted fibrinogen, and markedly elevated D-dimer confirms consumptive coagulopathy driven by severe systemic inflammation. \n\nThe chemical extraction described—a phosphorylated N-acetylglucosamine dimer with attached fatty acids—specifically identifies Lipid A, the toxic moiety of bacterial endotoxin (LPS) unique to the outer membrane of Gram-negative bacteria. Lipid A triggers systemic activation of the innate immune system (specifically via TLR4), inducing the synthesis and release of proinflammatory cytokines that cause peripheral vasodilation, hypotension, vascular leak, and widespread activation of the coagulation cascade. \n\nAmong the provided options, the organism corresponding to a Gram-negative pathogen capable of causing pelvic sepsis and producing Lipid A endotoxin is *Escherichia coli*, which is characterized as a lactose-fermenting, Gram-negative rod that forms pink colonies on MacConkey agar (Option D).'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:42:58.416061"
+  },
+  "d36e04a9d4d70289": {
+    "pred_answer": "B",
+    "question_domains": [
+      "3",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "Ophthalmology",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 35-year-old man comes to the physician because of itchy, watery eyes for the past week. He has also been sneezing multiple times a day during this period. He had a similar episode 1 year ago around springtime. He has iron deficiency anemia and ankylosing spondylitis. Current medications include ferrous sulfate, artificial tear drops, and indomethacin. He works as an elementary school teacher. His vital signs are within normal limits. Visual acuity is 20/20 without correction. Physical examination shows bilateral conjunctival injection with watery discharge. The pupils are 3 mm, equal, and reactive to light. Examination of the anterior chamber of the eye is unremarkable. Which of the following is the most appropriate treatment?\nOptions: A. Erythromycin ointment\nB. Ketotifen eye drops\nC. Warm compresses\nD. Fluorometholone eye drops\nE. Latanoprost eye drops\nKey Knowledge: - Patient Presentation: A 35-year-old man presenting with bilateral itchy and watery eyes, frequent sneezing, and a history of similar seasonal symptoms during springtime.\n- Physical Findings: Bilateral conjunctival injection with watery discharge, normal visual acuity (20/20), equal and reactive pupils, and an unremarkable anterior chamber.\n- Diagnosis: Seasonal Allergic Conjunctivitis (SAC), a type I hypersensitivity reaction driven by mast cell degranulation and histamine release in response to airborne allergens (e.g., pollen).\n- First-line Pharmacotherapy: Topical dual-action mast cell stabilizers and antihistamines (e.g., Ketotifen eye drops) are the most appropriate first-line treatment for managing acute symptoms of allergic conjunctivitis.\n- Alternative Treatments/Inappropriate Choices: Topical antibiotics (Erythromycin) are for bacterial infections; topical corticosteroids (Fluorometholone) are reserved for severe/refractory cases due to risks of increased intraocular pressure and cataracts; Latanoprost is used for glaucoma; cold compresses (not warm) serve as adjunctive therapy.\nTotal Analysis: The patient is a 35-year-old male presenting with classic signs and symptoms of seasonal allergic conjunctivitis (SAC), including bilateral ocular pruritus, watery discharge, conjunctival hyperemia, and associated nasal symptoms (sneezing) occurring predictably during springtime. The preserved visual acuity, normal pupillary light reflexes, and unremarkable anterior chamber exam rule out vision-threatening conditions such as acute anterior uveitis (which can be associated with ankylosing spondylitis), bacterial keratitis, or acute angle-closure glaucoma.\n\nManagement of mild-to-moderate seasonal allergic conjunctivitis focuses on allergen avoidance, supportive care (e.g., artificial tears and cold compresses), and targeted topical pharmacotherapy. Topical mast cell stabilizers combined with H1-receptor antagonists—such as Ketotifen eye drops—provide rapid symptom relief and prevent ongoing allergic inflammation, making them the standard first-line treatment option. Antibiotic ointments (Erythromycin) are ineffective for allergic etiologies. Topical steroids (Fluorometholone) should be avoided as initial therapy due to potential ocular adverse effects (cataracts, elevated intraocular pressure, ocular herpes reactivation). Prostaglandin analogs (Latanoprost) are indicated for glaucoma, and warm compresses may exacerbate allergic vasodilation and itching. Therefore, Ketotifen eye drops represent the most appropriate targeted therapy for this patient.'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:44:21.194147"
+  },
+  "2dc15798800b75c7": {
+    "pred_answer": "C",
+    "question_domains": [
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "General Medicine",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 39-year-old man presents to the emergency department because of progressively worsening chest pain and nausea that started at a local bar 30 minutes prior. The pain radiates to the epigastric area. He has a 5-year history of untreated hypertension. He has smoked 1 pack of cigarettes daily for the past 5 years and started abusing cocaine 2 weeks before his emergency room visit. The patient is diaphoretic and in marked distress. What should be the first step in management?\nOptions: A. Diltiazem\nB. Labetalol\nC. Nitroglycerin\nD. Propranolol\nE. Reassurance and continuous monitoring\nKey Knowledge: - Clinical Presentation: A 39-year-old male presenting with acute, severe chest pain radiating to the epigastrium, diaphoresis, and distress following recent cocaine use, along with risk factors of smoking and untreated hypertension.\n- Pathophysiology: Cocaine stimulates sympathetic activity via reuptake inhibition of norepinephrine, leading to severe coronary vasospasm, increased myocardial oxygen demand, thrombosis risk, and hypertension/tachycardia.\n- Initial Medical Management: Benzodiazepines and Nitrates (e.g., Nitroglycerin) are first-line pharmacological treatments for cocaine-induced acute coronary syndrome (ACS) / myocardial ischemia to induce coronary vasodilation and relieve vasospasm.\n- Contraindications: Non-selective beta-blockers (e.g., Propranolol) are strictly contraindicated in acute cocaine intoxication due to the potential for unopposed alpha-1 receptor activation, which can worsen coronary artery vasoconstriction and systemic hypertension.\nTotal Analysis: The patient's clinical vignette points directly to cocaine-induced chest pain and acute myocardial ischemia/vasospasm. Given his acute symptoms of chest pain, diaphoresis, and epigastric radiation shortly after cocaine exposure, immediate management requires addressing coronary artery vasospasm and reducing myocardial oxygen demand. \n\nNitroglycerin acts directly as a vascular smooth muscle relaxant, causing venodilation (reducing preload and cardiac workload) and coronary artery dilation (relieving vasoconstriction). Consequently, Nitroglycerin (Option C) is the correct first step in pharmacotherapy among the provided options. Non-selective beta-blockers such as Propranolol (Option D) should be avoided due to the risk of unopposed alpha-adrenergic vasoconstriction. Calcium channel blockers like Diltiazem (Option A) are second-line agents if nitrates and benzodiazepines fail, and continuous monitoring alone (Option E) is insufficient given the patient's severe acute distress and high risk for ischemic events.'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:45:27.845516"
+  },
+  "782e835939241711": {
+    "pred_answer": "D",
+    "question_domains": [
+      "Medical Field",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "Urology",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 68-year-old male comes to the physician for evaluation of right flank pain. He has a history of diabetes and peripheral artery disease. His blood pressure is 160/90 mm Hg. Physical examination shows abdominal tenderness and right flank tenderness. An ultrasound shows dilation of the right ureter and renal pelvis. Which of the following is the most likely underlying cause of this patient's condition?\nOptions: A. Renal artery stenosis\nB. Benign prostatic hyperplasia\nC. Diabetic nephropathy\nD. Common iliac artery aneurysm\nE. Urethral stricture\nKey Knowledge: - Clinical Presentation: A 68-year-old male with atherosclerotic risk factors (peripheral artery disease, diabetes, hypertension) presenting with right flank pain, abdominal tenderness, and right flank tenderness.\n- Imaging Findings: Ultrasound revealing right unilateral hydroureter and hydronephrosis (dilation of the right ureter and renal pelvis).\n- Anatomical Relationships: The ureter crosses the common iliac artery at the level of the pelvic brim. \n- Etiology & Differential Diagnosis:\n  - Common Iliac Artery Aneurysm: Strongly associated with peripheral artery disease/atherosclerosis. An expanding aneurysm can extrinsically compress the overlying right ureter, resulting in unilateral ureteral obstruction, hydroureter, hydronephrosis, and right flank/abdominal pain.\n  - Renal Artery Stenosis: Causes renovascular hypertension but does not lead to ureteral dilation or mechanical urinary tract obstruction.\n  - Benign Prostatic Hyperplasia (BPH) & Urethral Stricture: Cause lower urinary tract obstruction leading to urinary retention and typically bilateral (rather than unilateral) hydroureter and hydronephrosis.\n  - Diabetic Nephropathy: Causes intrinsic microvascular parenchymal kidney disease without mechanical obstruction or ureteral dilation.\nTotal Analysis: The patient is an elderly male with established vascular disease (peripheral artery disease) presenting with right flank pain, hypertension, and right-sided abdominal and flank tenderness. Ultrasound demonstrates unilateral dilation of the right ureter and renal pelvis, which indicates a right-sided distal extrinsic ureteral obstruction. \n\nAnatomically, the ureter crosses anterior to the bifurcation of the common iliac artery as it enters the pelvis. Given the patient's extensive history of peripheral artery disease, he is at significant risk for aneurysmal disease of the large arteries, such as a common iliac artery aneurysm. An enlarging common iliac artery aneurysm can directly compress the adjacent right ureter against retroperitoneal structures, causing mechanical obstruction that manifests as unilateral hydroureter, hydronephrosis, and flank pain.\n\nIn contrast, renal artery stenosis affects renal perfusion and contributes to hypertension, but it does not produce physical obstruction or ureteral dilation. Conditions affecting the lower urinary tract such as benign prostatic hyperplasia or urethral strictures would produce bladder outlet obstruction, which typically results in bilateral ureteral dilation and lower urinary tract symptoms. Diabetic nephropathy is a cause of chronic kidney disease secondary to glomerular damage and does not cause obstruction or hydroureter. Therefore, a common iliac artery aneurysm is the most likely underlying cause of this patient's unilateral ureteral obstruction and presentation. Correct Option: D.'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:46:28.648380"
+  },
+  "9d0cc6ba4e344228": {
+    "pred_answer": "C",
+    "question_domains": [
+      "format check).",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "General Medicine",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 65-year-old man is brought to the emergency department 30 minutes after the onset of acute chest pain. He has hypertension and asthma. Current medications include atorvastatin, lisinopril, and an albuterol inhaler. He appears pale and diaphoretic. His pulse is 114/min and blood pressure is 130/88 mm Hg. An ECG shows ST-segment depressions in leads II, III, and aVF. Laboratory studies show an increased serum troponin T concentration. The patient is treated for acute coronary syndrome and undergoes percutaneous transluminal coronary angioplasty. At the time of discharge, echocardiography shows a left ventricular ejection fraction of 58%. In addition to aspirin, which of the following drugs should be added to this patient's medication regimen?\nOptions: A. Nifedipine\nB. Enoxaparin\nC. Clopidogrel\nD. Spironolactone\nE. Propranolol\n\"\nKey Knowledge: 1. **Clinical Presentation & Management**: The patient presented with Non-ST-segment elevation acute coronary syndrome (NSTE-ACS) confirmed by ST depressions and elevated troponin T, and underwent percutaneous transluminal coronary angioplasty (PTCA/PCI).\n2. **Dual Antiplatelet Therapy (DAPT)**: Standard post-PCI guidelines mandate Dual Antiplatelet Therapy consisting of aspirin plus a P2Y12 receptor inhibitor (e.g., Clopidogrel, Ticagrelor, or Prasugrel) for at least 12 months to prevent acute and subacute stent thrombosis as well as secondary ischemic events.\n3. **Contraindications and Exclusions**:\n   - **Enoxaparin**: A low-molecular-weight heparin used for acute anticoagulation during hospitalization, not for long-term oral outpatient maintenance.\n   - **Spironolactone**: Indicated post-MI only in patients with significant left ventricular dysfunction (LVEF ≤ 40%) or heart failure/diabetes; this patient has a normal preserved LVEF (58%).\n   - **Propranolol**: A non-selective beta-blocker that can precipitate life-threatening bronchospasm in patients with underlying asthma. Cardioselective beta-blockers (e.g., metoprolol) are preferred if beta-blocker therapy is required.\n   - **Nifedipine**: Dihydrophyridine calcium channel blocker that is not indicated for secondary antiplatelet prevention following PCI.\nTotal Analysis: This 65-year-old man presented with acute chest pain, ST-segment depressions in the inferior leads, elevated troponin T levels, and was diagnosed with non-ST-elevation acute coronary syndrome (NSTE-ACS). He successfully underwent percutaneous transluminal coronary angioplasty (PTCA). Post-procedure echocardiography demonstrated a preserved left ventricular ejection fraction (LVEF) of 58%.\n\nThe primary therapeutic goal at discharge following PCI with stent placement is the prevention of stent thrombosis and recurrent atherothrombotic coronary events. According to current American College of Cardiology/American Heart Association (ACC/AHA) guidelines, all patients undergoing PCI for acute coronary syndrome should receive dual antiplatelet therapy (DAPT) combining aspirin with an oral P2Y12 inhibitor such as Clopidogrel for at least 12 months.\n\nEvaluating the other options:\n- **Enoxaparin** is an injectable anticoagulant reserved for acute inpatient ACS management and bridging therapy, not for oral discharge maintenance.\n- **Spironolactone** is indicated for post-MI secondary prevention only when left ventricular ejection fraction is severely reduced (LVEF ≤ 40%) or in the presence of symptomatic heart failure or diabetes mellitus. Since the patient's LVEF is 58%, aldosterone antagonist therapy is not indicated.\n- **Propranolol** is a non-selective beta-adrenergic blocker. Because of the patient's co-existing asthma, non-selective beta-blockers are contraindicated due to the risk of inducing severe bronchospasm via beta-2 receptor blockade. If a beta-blocker were to be initiated, a beta-1 cardioselective agent (e.g., metoprolol, bisoprolol) would be required.\n- **Nifedipine** is a calcium channel blocker and does not provide the essential antiplatelet protection required after stent implantation.\n\nTherefore, Clopidogrel is the standard and necessary drug to add to aspirin upon discharge.\n\n**Correct Answer:** C. Clopidogrel'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:48:01.575268"
+  },
+  "a566f00ecc9cfe77": {
+    "pred_answer": "C",
+    "question_domains": [
+      "Gyne",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "General Medicine",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 37-year-old-woman presents to her primary care physician requesting a new form of birth control. She has been utilizing oral contraceptive pills (OCPs) for the past 8 years, but asks to switch to an intrauterine device (IUD). Her vital signs are: blood pressure 118/78 mm Hg, pulse 73/min and respiratory rate 16/min. She is afebrile. Physical examination is within normal limits. Which of the following past medical history statements would make copper IUD placement contraindicated in this patient?\nOptions: A. A history of stroke or venous thromboembolism\nB. Current tobacco use\nC. Active or recurrent pelvic inflammatory disease (PID)\nD. Past medical history of breast cancer\nE. Known liver neoplasm\nKey Knowledge: 1. **Copper Intrauterine Device (IUD) Overview**: The copper IUD (ParaGard) is a highly effective, non-hormonal long-acting reversible contraceptive (LARC). \n2. **Contraindications to Copper IUD Placement**: \n   - **Absolute/Key Contraindications**: Active pelvic inflammatory disease (PID) or purulent cervicitis, acute pelvic infection, unexplained abnormal uterine bleeding, uterine cavity anomalies/fibroids distorting the cavity, active cervical or endometrial cancer, Wilson's disease, and known copper allergy.\n3. **Distinction from Hormonal Contraceptive Contraindications**:\n   - **Estrogen/Progestin Contraindications**: Active or history of venous thromboembolism (VTE)/stroke, age >35 with smoking, active breast cancer, and hepatic adenoma/neoplasm are contraindications for combined hormonal contraceptives (or progestin-containing methods in specific cases like breast cancer). Because the copper IUD is entirely non-hormonal, these conditions are NOT contraindications for its use.\nTotal Analysis: The patient is a 37-year-old female transitioning from oral contraceptive pills (OCPs) to an IUD. When considering copper IUD (ParaGard) placement, it is essential to distinguish between contraindications for hormonal contraceptives versus non-hormonal intrauterine devices. \n\n- **Option A (Stroke/VTE)**, **Option B (Tobacco use >35)**, **Option D (Breast cancer)**, and **Option E (Liver neoplasm)** are contraindications primarily associated with hormonal contraceptives (estrogen- or progestin-containing methods). The copper IUD contains no hormones and is safe to use in patients with cardiovascular disease, thromboembolic history, smoking history, or hormone-sensitive cancers.\n- **Option C (Active or recurrent PID)** is a direct contraindication for IUD placement due to the heightened risk of introducing pathogens into the upper genital tract, which can lead to severe pelvic infection, tubo-ovarian abscess, or long-term reproductive complications. Therefore, active or recurrent pelvic inflammatory disease renders copper IUD placement contraindicated.'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:49:09.134407"
+  },
+  "187b497612dbd247": {
+    "pred_answer": "A",
+    "question_domains": [
+      "Medical",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "Sh",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 23-year-old woman comes to the physician because she is embarrassed about the appearance of her nails. She has no history of serious illness and takes no medications. She appears well. A photograph of the nails is shown. Which of the following additional findings is most likely in this patient?\nOptions: A. Silvery plaques on extensor surfaces\nB. Flesh-colored papules in the lumbosacral region\nC. Erosions of the dental enamel\nD. Pallor of the conjunctival mucosa\nE. Holosystolic murmur at the left lower sternal border\nKey Knowledge: - Psoriatic nail disease (e.g., nail pitting, onycholysis, oil-drop discoloration, subungual hyperkeratosis) is a distinct dermatologic feature strongly associated with psoriasis vulgaris and psoriatic arthritis.\n- Cutaneous psoriasis classically presents as well-demarcated, erythematous plaques covered by silvery-white scales located primarily on extensor surfaces (such as the elbows, knees, and scalp).\n- Associated option differentials: Flesh-colored papules in the lumbosacral region (Shagreen patches in tuberous sclerosis), dental enamel erosion (bulimia nervosa), conjunctival pallor (anemia), and holosystolic murmur at the lower sternal border (tricuspid regurgitation or VSD).\nTotal Analysis: The clinical presentation of a young, otherwise healthy woman presenting with nail changes/dystrophy points towards psoriatic nail involvement. Nail changes, including pitting and onycholysis, frequently accompany or precede the skin manifestations of psoriasis vulgaris. Dermatologically, psoriasis is characterized by well-circumscribed, erythematous plaques with thick, silvery scales classically found on extensor surfaces like the knees and elbows. Therefore, the most likely additional finding expected in this patient is silvery plaques on extensor surfaces (Option A).'''",
+    "variant": "V3",
+    "timestamp": "2026-07-31T12:50:12.950807"
+  },
+  "ed294d8df8a58e0e": {
+    "pred_answer": "E",
+    "question_domains": [
+      "** This scenario falls under Obstetrics (for the pregnancy and labor issues), Infectious Disease (for",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** \"A 24-year-old G2P1 woman at 39 weeks' gestation presents to the emergency department complaining of painful contractions occurring every 10 minutes for the past 2 hours, consistent with latent labor. She says she has not experienced vaginal discharge, bleeding, or fluid leakage, and is currently taking no medications. On physical examination, her blood pressure is 110/70 mm Hg, heart",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 24-year-old G2P1 woman at 39 weeks’ gestation presents to the emergency department complaining of painful contractions occurring every 10 minutes for the past 2 hours, consistent with latent labor. She says she has not experienced vaginal discharge, bleeding, or fluid leakage, and is currently taking no medications. On physical examination, her blood pressure is 110/70 mm Hg, heart rate is 86/min, and temperature is 37.6°C (99.7°F). She has had little prenatal care and uses condoms inconsistently. Her sexually transmitted infections status is unknown. As part of the patient’s workup, she undergoes a series of rapid screening tests that result in the administration of zidovudine during delivery. The infant is also given zidovudine to reduce the risk of transmission. A confirmatory test is then performed in the mother to confirm the diagnosis of HIV. Which of the following is most true about the confirmatory test?\nOptions: A. It determines the genotype of the virus\nB. It is a Southwestern blot, identifying the presence of DNA-binding proteins\nC. It is a Northern blot, identifying the presence of RNA\nD. It is a Northern blot, identifying the presence of DNA\nE. It is an HIV-1/HIV2 antibody differentiation immunoassay\nTotal Analysis: Steps: 1. **Assess Patient's Current Status:** Evaluate the patient's blood pressure, heart rate, temperature, and the presence of any signs of infection like fever or chills. 2. **Examine Fetal Condition:** Check the fetal position, activity level, and well-being. 3. **Administer Antiviral Medication:** Given the suspected condition (HIV), administer antiretroviral therapy (ART) immediately. 4. **Perform Confirmatory Test:** Collect a sample from the patient for HIV testing using a sensitive method like ELISA or Western Blot. 5. **Interpret Results & Provide Care:** If the test is positive, initiate treatment for HIV and consider referring the patient for further care. If negative, reassure the patient and provide support.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:34:19.226870"
+  },
+  "97df51901a51cda7": {
+    "pred_answer": "E",
+    "question_domains": [
+      "** Perform a chest X-ray to look for signs of pneumonia or other infections",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "**",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 72-year-old man comes to the physician because of a 2-month history of fatigue and worsening abdominal pain. During this period, he also has excessive night sweats and shortness of breath on exertion. Over the past 3 months, he has had a 5.6-kg (12-lb) weight loss. He had a myocardial infarction 3 years ago. He has hypertension, diabetes mellitus, and chronic bronchitis. His medications include insulin, aspirin, lisinopril, and an albuterol inhaler. He has smoked half a pack of cigarettes for the past 45 years. Vital signs are within normal limits. The spleen is palpated 6 cm below the left costal margin. Laboratory studies show:\nHemoglobin 6.4 g/dL\nMean corpuscular volume 85 μm3\nLeukocyte count 5,200/mm3\nPlatelet count 96,000/mm3\nA blood smear is shown. Bone marrow aspiration shows extensive fibrosis and a few scattered plasma cells. A JAK 2 assay is positive. Which of the following is the most appropriate next step in management?\"\nOptions: A. Cladribine\nB. Prednisone\nC. Imatinib\nD. Ruxolitinib\nE. Stem cell transplantation\nTotal Analysis: Steps: 1. **Review Patient History & Current Status:** Summarize the patient's age, gender, current symptoms (fatigue, abdominal pain, sweats, breathlessness), past history (myocardial infarction, diabetes, smoking), and current medications. 2. **Evaluate Abdominal Pain & Spleen Size:** Assess the location, intensity, duration, and any associated features like nausea, vomiting, or fever. Determine if the spleen size (6 cm) is concerning given the patient's history of heart issues. 3. **Consider Laboratory Results:** Interpret the hemoglobin level (low), mean corpuscular volume (MCV), leukocyte count (high), and platelet count (high). These results suggest anemia with potentially increased red cell destruction (hemolytic anemia) or a bone marrow failure. 4. **Analyze Blood Smear & Bone Marrow Aspiration:** The blood smear showing atypical lymphocytes suggests a possible leukemia or lymphoma. The bone marrow findings (fibrosis and plasma cell infiltration) are consistent with myelodysplastic syndromes (MDS) or certain types of leukemia. 5. **Conclude & Referral:** Based on the clinical presentation and laboratory findings, decide on the need for further diagnostic tests (e.g., chromosome analysis, immunophenotyping, CT scan) and potential treatments (chemotherapy, hematopoietic stem cell transplant).",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:37:38.403431"
+  },
+  "8011eac621e49ec9": {
+    "pred_answer": "E",
+    "question_domains": [
+      "** Neurology (for neurological assessment and potential diagnosis)",
+      "Genetics (for identifying the specific",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** A 20-year-old man comes to the physician because of worsening gait unsteadiness and bilateral hearing loss for 1 month. He has had intermittent tingling sensations on both cheeks over this time period. He has no history of serious medical illness and takes no medications. Audiometry shows bilateral sensorineural hearing loss. Genetic evaluation shows a mutation of a tumor suppressor gene on chromosome 22 that encodes merlin. This patient",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 20-year-old man comes to the physician because of worsening gait unsteadiness and bilateral hearing loss for 1 month. He has had intermittent tingling sensations on both cheeks over this time period. He has no history of serious medical illness and takes no medications. Audiometry shows bilateral sensorineural hearing loss. Genetic evaluation shows a mutation of a tumor suppressor gene on chromosome 22 that encodes merlin. This patient is at increased risk for which of the following conditions?\nOptions: A. Renal cell carcinoma\nB. Meningioma\nC. Astrocytoma\nD. Vascular malformations\nE. Telangiectasias\nKey Knowledge: - The patient is at increased risk for a hereditary peripheral neuropathy due to the mutation in the Merlin gene.\n- The combination of gait unsteadiness, hearing loss, and cheek tingling suggests a central nervous system (CNS) involvement.\n- Genetic testing identified a mutation in the Merlin gene, indicating an increased predisposition to hereditary neuropathies.\nTotal Analysis: The patient is at high risk for a hereditary peripheral neuropathy due to the mutation in the Merlin gene. The clinical presentation (gait unsteadiness, hearing loss, and cheek tingling) points towards a central nervous system (CNS) issue. Further diagnostic workup should include imaging (CT/MRI) of the brain to assess for possible CNS pathology.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:39:46.569441"
+  },
+  "ac2c269fdad86cfc": {
+    "pred_answer": "E",
+    "question_domains": [
+      "** Cardiology (for heart-related murmurs) and General Internal Medicine (for comprehensive check-ups). 3.",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** \"A 47-year-old executive schedules an appointment his physician for a routine medical check-up. He currently has no complaints and claims to be 'as fit as a fiddle.' The physical examination findings are unremarkable, except for a mid-systolic murmur heard in the 2nd left intercostal space that radiates to the carotids on auscultation. The physician instructs the patient to stand from a sup",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 47-year-old executive schedules an appointment his physician for a routine medical check-up. He currently has no complaints and claims to be “as fit as a fiddle.” The physical examination findings are unremarkable, except for a mid-systolic murmur heard in the 2nd left intercostal space that radiates to the carotids on auscultation. The physician instructs the patient to stand from a supine position with the stethoscope still placed on his chest. Which of the following changes would occur with this maneuver?\nOptions: A. An increase in right atrial pressure\nB. An increase in left ventricular end-diastolic pressure\nC. An increase in pulmonary capillary wedge pressure\nD. A reduction in the slope of the pacemaker potential\nE. A reduction in diastolic filling time\nKey Knowledge: - Mid-systolic murmur (MSM) is often indicative of mitral regurgitation (MR).\n- MR increases left ventricular end-diastolic pressure (LVEDP) due to reduced valve closure and increased flow through the leaky valve.\n- Other conditions like tricuspid regurgitation or mitral stenosis may cause similar murmurs but have different pathophysiological mechanisms and effects on LVEDP.\nTotal Analysis: The mid-systolic murmur (MSM) suggests the presence of mitral regurgitation (MR). This condition leads to increased left ventricular end-diastolic pressure (LVEDP) due to the impaired closing of the mitral valve and the consequent increase in blood flow into the left ventricle. The other options represent different types of heart murmors or conditions that do not directly correlate with the specific effect on LVEDP.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:42:00.867303"
+  },
+  "e71ee09a53edc587": {
+    "pred_answer": "E",
+    "question_domains": [
+      "Virology",
+      "Microbiology",
+      "Immunology",
+      "Genetics",
+      "Pathology"
+    ],
+    "option_domains": [
+      "Initially, a host cell is co-infected with 2 viruses from the same virus family. Within the host cell, concomitant production of various genome segments from both viruses occurs. Ultimately, the different genome segments from the viruses are packaged into a unique and novel virus particle. The",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A microbiologist is studying the emergence of a virulent strain of the virus. After a detailed study of the virus and its life cycle, he proposes a theory: Initially, a host cell is co-infected with 2 viruses from the same virus family. Within the host cell, concomitant production of various genome segments from both viruses occurs. Ultimately, the different genome segments from the viruses are packaged into a unique and novel virus particle. The newly formed virus particle is both stable and viable and is a new strain from the virus family that caused the outbreak of infection. Which of the following viruses is capable of undergoing the above-mentioned process?\nOptions: A. Cytomegalovirus\nB. Epstein-Barr virus\nC. Human immunodeficiency virus\nD. Rotavirus\nE. Vaccinia virus\nKey Knowledge: The virus must belong to a family known to produce multiple genome segments during replication (e.g., HIV, influenza).\nTotal Analysis: The virus proposed must be able to replicate using mechanisms like reverse transcription and integration (HIV) or have a simpler but still capable of producing and packaging diverse genome segments (flu-like viruses). It should also be able to assemble these segments into a unique virus particle and maintain stability and viability outside the host.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:44:09.801341"
+  },
+  "71f34a7ced7e1bd5": {
+    "pred_answer": "B",
+    "question_domains": [
+      "** Conduct a thorough physical examination focusing on the abdomen, back, and neurological checks. Order appropriate laboratory tests like CBC, biochemistry panel, and possibly an ultrasound if needed. 3.",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** A 59-year-old overweight woman presents to the urgent care clinic with the complaint of severe abdominal pain for the past 2 hours. She also complains of a dull pain in her back with nausea and vomiting several times. Her pain has no relation to food. Her past medical history is significant for recurrent abdominal pain due to cholelithiasis. Her father died at the age of 60 with some form of abdominal cancer. Her",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 59-year-old overweight woman presents to the urgent care clinic with the complaint of severe abdominal pain for the past 2 hours. She also complains of a dull pain in her back with nausea and vomiting several times. Her pain has no relation with food. Her past medical history is significant for recurrent abdominal pain due to cholelithiasis. Her father died at the age of 60 with some form of abdominal cancer. Her temperature is 37°C (98.6°F), respirations are 15/min, pulse is 67/min, and blood pressure is 122/98 mm Hg. Physical exam is unremarkable. However, a CT scan of the abdomen shows a calcified mass near her gallbladder. Which of the following diagnoses should be excluded first in this patient?\nOptions: A. Acute cholecystitis\nB. Gallbladder cancer\nC. Choledocholithiasis\nD. Pancreatitis\nE. Duodenal peptic ulcer\nTotal Analysis: Steps: 1. **History Taking:** Collect details such as the type and location of pain, its intensity, duration, radiation (if any), appetite changes, and recent intake of specific foods or drugs. 2. **Physical Exam:** Examine the abdomen for distension, tenderness, guarding, and rebound tenderness. Evaluate the liver and spleen for size and tenderness. Check for signs of dehydration (dry mouth,少尿) and peripheral circulation. 3. **Imaging Study Interpretation:** Review CT scan results to identify the mass's location (bile duct, pancreatic, abdominal wall) and characteristics (size, density, enhancement). 4. **Diagnosis & Management:** Combine history, exam, and imaging findings to rule out common causes like gallstones, pancreatitis, and tumors while considering less likely conditions like diverticulitis or mesenteric ischemia.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:46:04.729604"
+  },
+  "24460d8f2a7bf028": {
+    "pred_answer": "D",
+    "question_domains": [
+      "** The experimental study focuses on reducing the activity of mediators involved in allergic responses, specifically those causing asthma attacks. 3. **Classify using",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** A 7-year-old boy is brought to his pediatrician's office for a follow-up visit. He was diagnosed with asthma when he was 3 years old and has since been on treatment for the condition. He is currently on a β-agonist inhaler because of exacerbation of his symptoms. He has observed that his symptoms are more prominent in springtime, especially when the new flowers are blooming. His mother has a backyard garden and",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 7-year-old boy is brought to his pediatrician’s office for a follow-up visit. He was diagnosed with asthma when he was 3 years old and has since been on treatment for the condition. He is currently on a β-agonist inhaler because of exacerbation of his symptoms. He has observed that his symptoms are more prominent in springtime, especially when the new flowers are blooming. His mother has a backyard garden and whenever he goes out to play there, he experiences chest tightness with associated shortness of breath. He has been advised to take more precaution during this seasonal change and to stay away from pollen. He is also being considered for an experimental therapy, which attenuates the activity of certain mediators which cause his asthmatic attack. The targeted mediator favors the class switching of antibodies. A reduction in this mechanism will eventually reduce the exaggerated response observed during his asthmatic attacks, even when exposed to an allergen. Which of the following mediators is described in this experimental study?\nOptions: A. IL-5\nB. IL-2\nC. IL-10\nD. IL-13\nE. IL-4\nTotal Analysis: Steps: 1. **Assess Patient History & Current Status:** Evaluate the patient's age (7 years), history of asthma diagnosis at 3 years old, current treatment (β-agonist inhaler for exacerbations), and any recent changes in symptoms (more prominent in spring). 2. **Review Medication Information:** Note the type of medication (β-agonist) and its use (for exacerbations only). 3. **Examine Environmental Factors:** Consider the patient's exposure to potential triggers like pollen (springtime flowers) and his current precautions (avoiding outdoor play). 4. **Evaluate Treatment Options:** Discuss the proposed experimental therapy (attenuating mediator activity) and its target (class-switched antibodies). 5. **Conclude & Provide Advice:** Summarize the current situation, the alarmingly high risk of severe allergic reactions (anaphylaxis) if the patient comes into contact with pollens, and recommend closely monitoring his condition and seeking immediate medical attention if symptoms worsen.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:48:11.264937"
+  },
+  "4dbf294ba29aa210": {
+    "pred_answer": "E",
+    "question_domains": [
+      "** To compare the two groups on these categorical variables while controlling for confounders like age, socioeconomic background, and family",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** A 3-month-old boy is brought to the emergency department by his parents after an episode of cyanosis and muscle hypotonia that resolved after 2 minutes. His symptoms were classified as a brief resolved unexplained event (BRUE) due to diagnostic failure. The pediatrician is investigating the risk factors for BRUE in infants. She collects data on 75 infants with BRUE and 75 infants without BRUE, all under",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 3-month-old boy is brought the emergency department by his parents after an episode of cyanosis and muscle hypotonia that resolved after 2 minutes. Diagnostic evaluation fails to discover an exact etiology of the boy's symptoms and the episode is classified as a brief resolved unexplained event (BRUE). The risk profile for BRUE in infants remains largely unknown. The pediatrician who saw the boy in the emergency department is trying to identify risk factors for BRUE. She is aware of several confounders, including age, socioeconomic background, and family history of medical illness. She recruits 75 infants under 1 year of age with BRUE and 75 infants without BRUE of the same age, socioeconomic background, and family history of medical illness. She then compares the two groups with regard to history of feeding problems and history of recent upper respiratory infection. Which of the following methods was conducted to control confounding bias in the study?\nOptions: A. Stratified analysis\nB. Blinding\nC. Restriction\nD. Randomization\nE. Matching\nTotal Analysis: Steps: 1. **Define Variables & Groups:** Identify the two groups (BRUE vs. no BRUE) based on the symptom presentation. 2. **List Confounders:** Recognize the potential influencing factors (age, socioeconomic status, family history) and state they will be controlled for. 3. **Select Appropriate Statistical Test:** Choose a method to compare the two groups (e.g., chi-square test for categorical data) while adjusting for confounders. 4. **Analyze Data:** Apply the chosen statistical test to the pre-processed data (controlling for confounders) and interpret the results. 5. **Report Findings:** Summarize the findings regarding the relationship between the symptom type (BRUE) and the confounders (age, socioeconomic status, family history) in both groups.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:49:46.138020"
+  },
+  "5bd22b4f87028dd9": {
+    "pred_answer": "A",
+    "question_domains": [
+      "** Based on the history and symptoms, determine if the condition is likely cardiac (e.g., angina, myocardial infarction) or non-card",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** A 29-year-old man presents to the emergency department due to central chest pain over the past 3 days which is constant and unrelated to exertion. The pain is sharp, severe, increases when lying down, and improves with leaning forward. The pain also radiates to his shoulders and neck. The patient has no past medical history. He has smoked 10 cigarettes per day for the past 7 years and occasionally drinks alcohol. He",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 29-year-old man presents to the emergency department due to central chest pain over the past 3 days which is constant and unrelated to exertion. The pain is sharp, severe, increases when lying down, and improves with leaning forward. The pain also radiates to his shoulders and neck. The patient has no past medical history. He has smoked 10 cigarettes per day for the past 7 years and occasionally drinks alcohol. He presents with vital signs: blood pressure 110/70 mm Hg, regular radial pulse of 95/min, and temperature 37.3°C (99.1°F). On physical exam, a scratching sound of to-and-from character is audible over the left sternal border at end-expiration with the patient leaning forward. His chest X-ray is normal and ECG is shown in the picture. Which of the following is the optimal therapy for this patient?\nOptions: A. Indomethacin +/- omeprazole\nB. Ibuprofen + colchicine +/- omeprazole\nC. Prednisone + colchicine\nD. Pericardiocentesis\nE. Pericardiectomy\nTotal Analysis: Steps: 1. **Review Reports:** Analyze the two reports provided (Report0 and Report1) to extract key information about the patient's symptoms, history, and current status. 2. **Compare Information:** Identify similarities and differences between the cases described in the reports. 3. **Formulate Conclusion:** Based on the comparison, determine the most appropriate course of action for the patient presented in Report1.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:51:48.035524"
+  },
+  "302e4494fa153b77": {
+    "pred_answer": "C",
+    "question_domains": [
+      "** Measure blood alcohol concentration, complete blood count, liver function tests, and possibly neuroimaging",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine",
+      "General Medicine"
+    ],
+    "option_domains": [
+      "** A 46-year-old man is brought to the emergency department for evaluation of altered mental status. He was found on the floor in front of his apartment. He is somnolent but responsive when aroused. His pulse is 64/min, respiratory rate is 15/min, and blood pressure is 120/75 mm Hg. On physical examination, an alcoholic smell and slurred speech are noted. Neurological",
+      "General Medicine"
+    ],
+    "syn_report": "Question: A 46-year-old man is brought to the emergency department for evaluation of altered mental status. He was found on the floor in front of his apartment. He is somnolent but responsive when aroused. His pulse is 64/min, respiratory rate is 15/min, and blood pressure is 120/75 mm Hg. On physical examination, an alcoholic smell and slurred speech are noted. Neurological exam shows diminished deep tendon reflexes bilaterally and an ataxic gait. His pupils are normal. Blood alcohol concentration is 0.04%. An ECG shows no abnormalities. Which of the following is the most likely cause of this patient's symptoms?\nOptions: A. Hypoglycemia\nB. Cerebral ischemia\nC. Ethanol intoxication\nD. Cannabis intoxication\nE. Benzodiazepine intoxication\n\"\nTotal Analysis: Steps: 1. **Assess Patient History & Symptoms:** Evaluate the patient's age, gender, history of alcohol use, current state of consciousness (e.g., stupor, confusion), neurological findings, and any relevant family history. 2. **Perform Basic Laboratory Tests:** Measure blood glucose levels, electrolytes, and possibly toxicology screens to rule out substance abuse complications like ethanol poisoning, drug toxicity, or metabolic disorders. 3. **Conduct Neurological Evaluation:** Assess cranial nerve function, motor strength, coordination, and sensory deficits. 4. **Consider Imaging Studies:** If there is suspicion of a brain lesion (e.g., stroke, infection), perform imaging studies such as CT scan or MRI to visualize structures like the brain parenchyma, veins, and arteries. 5. **Evaluate Refractory Condition:** If initial evaluations are inconclusive, consider further diagnostic tests like EEG for seizure monitoring, CSF analysis for infectious diseases, or functional neuroimaging if there is evidence of damage affecting cognitive functions. Options: A. Hypoglycemia - Caused by low blood sugar levels, often seen in diabetic patients or those taking certain medications. B. Cerebral ischemia - Occurs when blood flow to part of the brain is reduced, leading to tissue death and dysfunction. C. Ethanol intoxication - Characterized by impaired judgment, slurred speech, slowed responses, and sometimes convulsions due to elevated blood alcohol levels. D. Cannabis intoxication - Similar to alcohol intoxication, but caused by consuming cannabis (marijuana) instead of alcohol. E. Benzodiazepine intoxication - Resulting from excessive use of tranquilizers like diazepam, which can cause drowsiness, confusion, and muscle relaxation.",
+    "variant": "V3",
+    "timestamp": "2026-09-26T13:54:36.949140"
+  }
+}

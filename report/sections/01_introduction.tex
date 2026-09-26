@@ -1,0 +1,48 @@
+\section{Introduction and System Motivation}
+\label{sec:introduction}
+
+Clinical reasoning in standardized board examinations such as the United States Medical Licensing Examination (USMLE) MedQA benchmark~\cite{jin2021medqa} demands multi-faceted analytical synthesis across distinct medical disciplines. A single clinical vignette presented to an attending physician rarely maps to an isolated subspecialty. Diagnostic evaluation of a patient presenting with progressive neuromuscular weakness, cutaneous hyperpigmentation, and persistent hyperkalemia requires concurrent evaluation across endocrinology, neurology, immunology, and clinical biochemistry~\cite{singhal2023large, nori2023can}. 
+
+Monolithic single-prompt foundation model architectures suffer from key structural vulnerabilities when applied directly to complex clinical diagnostic tasks~\cite{wei2022chain, tang2023medagents}:
+
+\begin{enumerate}
+    \item \textbf{Monolithic Cognitive Overload}: Compressing multi-stage clinical reasoning—differential diagnosis generation, contraindication screening, pathophysiology trace, and final option selection—into a single generative prompt invocation introduces high susceptibility to diagnostic distraction and hallucinated clinical evidence.
+    \item \textbf{Knowledge Cutoff and Factuality Deficits}: Static parameter weights cannot maintain up-to-date alignment with evolving medical literature, therapeutic guidelines, or specific textbook definitions~\cite{lewis2020retrieval, xiong2023medrag}. Without dynamic retrieval mechanisms, static neural generators risk fabricating clinical trial outcomes or laboratory reference values.
+    \item \textbf{Lack of Diagnostic Verification}: Direct end-to-end generation lacks explicit peer verification loops. When an initial reasoning step selects an incorrect physiological pathway, the model tends to confirm its initial error throughout subsequent reasoning tokens, yielding confidently incorrect conclusions.
+\end{enumerate}
+
+To address these failure modes, \textbf{MedRAGAgents} introduces an architecture combining specialized agentic decomposition~\cite{tang2023medagents, wu2023autogen, park2023generative}, biomedical dense vector retrieval via MedCPT~\cite{jin2023medcpt}, and a state-managed dual-layer memory infrastructure. MedRAGAgents disaggregates the single monolithic prompt into five specialized agent roles: domain classification (\texttt{DomainAgent}), specialty analysis (\texttt{AnalysisAgent}), evidence retrieval (\texttt{RAGAgent}), holistic synthesis (\texttt{SynthesisAgent}), and consensus verification (\texttt{VerifierAgent}). 
+
+The design enforces strict boundaries between stateless execution modules and a centralized memory bus (\texttt{MemoryManager}). Intermediate reasoning artifacts, including subspecialty evaluations and retrieved textbook passages, inhabit an in-RAM scratchpad (\texttt{ShortTermMemory}) during single-question execution. Resolved predictions are cached in a persistent JSON key-value store (\texttt{LongTermMemory}) indexed by canonical SHA-256 digests of question-option payloads. This dual-layer structure guarantees zero-latency, zero-token execution on previously solved vignettes while preventing cross-question context contamination.
+
+Table~\ref{tab:compliance_matrix} delineates how the MedRAGAgents system fulfills all requirements specified for the midterm system specification.
+
+\begin{table}[h!]
+\centering
+\caption{System Requirements Compliance Matrix for MedRAGAgents.}
+\label{tab:compliance_matrix}
+\small
+\begin{tabularx}{\textwidth}{l X X l}
+\toprule
+\textbf{Specification Requirement} & \textbf{Mandated System Criterion} & \textbf{MedRAGAgents Architectural Realization} & \textbf{Primary Source File} \\
+\midrule
+System Task & Input: Clinical vignette. Output: Single option letter + explanation. & Output constrained via regex extractor; Invalid Response Rate = $0.0\%$. & \texttt{pipeline.py}, \texttt{base\_agent.py} \\
+Baseline (V0) & Direct reasoning via Chain-of-Thought (CoT). & Class \texttt{V0DirectLLM} executes single-pass prompt without agents or RAG. & \texttt{pipeline.py} \\
+RAG-Only (V1) & Dense document retrieval integrated with base model. & Class \texttt{V1RAGOnly} retrieves Top-32 passages via MedCPT vector index. & \texttt{agents/rag\_agent.py} \\
+Multi-Agent (V2) & Multi-specialty decomposition, synthesis, verification. & Class \texttt{V2MultiAgent} coordinates 5 stateless specialized agents. & \texttt{pipeline.py}, \texttt{agents/} \\
+Full System (V3) & Multi-Agent + MedRAG + Dual-Layer Memory Bus. & Class \texttt{V3FullSystem} unifies 5 agents, MedCPT retrieval, short/long memory. & \texttt{pipeline.py}, \texttt{memory.py} \\
+Dual Memory & In-RAM short-term buffer; persistent disk cache. & Class \texttt{ShortTermMemory} and \texttt{LongTermMemory} using SHA-256 keys. & \texttt{memory.py} \\
+Benchmark Dataset & Official MedQA-USMLE test collection ($N=1,273$). & Streaming data loader supporting partial evaluation and rate limiting. & \texttt{run.py}, \texttt{evaluate.py} \\
+Statistical Evaluation & Accuracy, Invalid Rate, Bootstrap CI, McNemar test. & Class \texttt{Evaluator} computes complete non-parametric statistical metrics. & \texttt{evaluate.py} \\
+Project Artifacts & Source code, JSONL predictions, evaluation script, slides. & Executable repository, \texttt{outputs/*.jsonl}, automated evaluation runner. & Project Workspace \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The primary architectural contributions of this work are summarized as follows:
+\begin{itemize}
+    \item \textbf{Specialty Decomposition Protocol}: A structured framework that extracts domain specializations from clinical questions and diagnostic options, isolating specialty analysis to dedicated prompt contexts.
+    \item \textbf{Consensus Verification Protocol}: An iterative voting mechanism where domain agents assess combined diagnostic synthesis reports, submitting binary votes and actionable modification advice across up to $k=3$ verification rounds.
+    \item \textbf{Dual-Layer State Management}: A memory framework separating transient execution states from persistent SHA-256 hashed inference outputs, preventing context bleeding across test instances.
+    \item \textbf{Empirical Evaluation and Statistical Rigor}: Comprehensive benchmark evaluation across four progressive variants (V0 through V3) on MedQA-USMLE, accompanied by 1,000-resample non-parametric bootstrap confidence intervals and paired McNemar statistical significance testing.
+\end{itemize}

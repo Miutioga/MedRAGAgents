@@ -1,0 +1,60 @@
+\section{System Variants and Architectural Hierarchy}
+\label{sec:system_variants}
+
+To systematically evaluate the performance contribution of each system component, MedRAGAgents implements four progressive system variants: V0, V1, V2, and V3. Each variant represents an incremental architectural milestone, progressing from a simple single-prompt baseline to the full multi-agent, retrieval-augmented system with dual-layer memory.
+
+\subsection{Variant Progression Hierarchy}
+
+Figure~\ref{fig:variant_tree} illustrates the structural evolution across system variants.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  \node [monobox] (v0) {\textbf{V0 Baseline}\\Direct Chain-of-Thought\\(Single Prompt)};
+  \node [monobox, right=1.2cm of v0] (v1) {\textbf{V1 RAG-Only}\\MedCPT Retrieval\\+ Foundation Model};
+  \node [monobox, right=1.2cm of v1] (v2) {\textbf{V2 Multi-Agent}\\5 Specialty Agents\\(Stateless / No Memory)};
+  \node [monobox, right=1.2cm of v2] (v3) {\textbf{V3 Full System}\\Multi-Agent + MedRAG\\+ Dual-Layer Memory};
+
+  \draw [monoline] (v0) -- node [above, font=\small] {+ MedRAG} (v1);
+  \draw [monoline] (v1) -- node [above, font=\small] {+ Multi-Agent} (v2);
+  \draw [monoline] (v2) -- node [above, font=\small] {+ Memory Bus} (v3);
+\end{tikzpicture}%
+}
+\caption{System Variant Progression Tree Architecture.}
+\label{fig:variant_tree}
+\end{figure}
+
+\subsection{Variant Specifications}
+
+\begin{enumerate}
+    \item \textbf{Variant V0 (Direct CoT Baseline)}: Class \texttt{V0DirectLLM} executes a single-step Chain-of-Thought prompt without external document retrieval or specialized agent roles. It establishes the unassisted baseline performance of the underlying foundation model.
+    \item \textbf{Variant V1 (RAG-Only Integration)}: Class \texttt{V1RAGOnly} integrates the MedCPT dense vector search module directly into the foundation model prompt context, isolating the performance gain contributed by external textbook evidence.
+    \item \textbf{Variant V2 (Stateless Multi-Agent System)}: Class \texttt{V2MultiAgent} executes the complete multi-specialty agent pipeline (\texttt{DomainAgent}, \texttt{AnalysisAgent}, \texttt{SynthesisAgent}, \texttt{VerifierAgent}) in a stateless configuration without retrieval or persistent caching.
+    \item \textbf{Variant V3 (Full Integrated System)}: Class \texttt{V3FullSystem} combines the multi-agent reasoning architecture of V2, the MedCPT textbook evidence retrieval of V1, and the dual-layer memory bus of \texttt{MemoryManager}.
+\end{enumerate}
+
+Table~\ref{tab:variant_matrix} provides a detailed feature comparison across all four system variants.
+
+\begin{table}[htbp]
+\centering
+\caption{Feature Comparison Matrix Across System Variants (V0--V3).}
+\label{tab:variant_matrix}
+\small
+\begin{tabularx}{\textwidth}{l c c c c}
+\toprule
+\textbf{Architectural Feature} & \textbf{V0 (Baseline)} & \textbf{V1 (RAG-Only)} & \textbf{V2 (Multi-Agent)} & \textbf{V3 (Full System)} \\
+\midrule
+Chain-of-Thought Reasoning & Yes & Yes & Yes & Yes \\
+MedCPT Vector Retrieval ($K=32$) & No & Yes & No & Yes \\
+Specialty Domain Classification & No & No & Yes & Yes \\
+Isolated Parallel Specialty Analyses & No & No & Yes & Yes \\
+Unified Diagnostic Synthesis & No & No & Yes & Yes \\
+Iterative Consensus Verification & No & No & Yes & Yes \\
+In-RAM Scratchpad Memory Bus & No & No & No & Yes \\
+Persistent SHA-256 Key Cache & No & No & No & Yes \\
+Zero-Token Cache Hit Replay & No & No & No & Yes \\
+Target Output Regex Enforcement & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabularx}
+\end{table}

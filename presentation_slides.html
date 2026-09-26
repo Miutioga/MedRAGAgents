@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedRAGAgents - Midterm Presentation</title>
+<style>
+  :root {
+    --bg-dark: #0f172a;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --code-bg: #090d16;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --cyan: #0ea5e9;
+    --emerald: #10b981;
+    --amber: #f59e0b;
+    --crimson: #ef4444;
+    --purple: #8b5cf6;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .slide-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    width: 90vw;
+    max-width: 1280px;
+    height: 85vh;
+    max-height: 720px;
+    background: var(--bg-dark);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 32px 40px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .slide.active {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-header {
+    border-bottom: 2px solid var(--cyan);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  .category-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .slide-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 4px;
+  }
+
+  .content-grid {
+    display: grid;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .card-cyan { border-top: 3px solid var(--cyan); }
+  .card-emerald { border-top: 3px solid var(--emerald); }
+  .card-amber { border-top: 3px solid var(--amber); }
+  .card-crimson { border-top: 3px solid var(--crimson); }
+  .card-purple { border-top: 3px solid var(--purple); }
+
+  .code-box {
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 14px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    line-height: 1.4;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--card-border);
+  }
+
+  th {
+    background: var(--card-bg);
+    color: var(--cyan);
+    font-weight: 700;
+  }
+
+  tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+  .slide-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--card-border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .nav-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+
+  .nav-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--cyan);
+    color: var(--text-main);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover {
+    background: var(--cyan);
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-container">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide active">
+    <div></div>
+    <div style="text-align: center; padding: 40px 20px;">
+      <p class="category-tag" style="font-size: 1rem;">ĐỀ TÀI GIỮA KỲ — MACHINE LEARNING IN SECURITY (UIT-SDH)</p>
+      <h1 style="font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin: 20px 0 10px;">Medical Multi-Agent LLM System for Factual Accuracy on MedQA-USMLE</h1>
+      <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 900px; margin: 0 auto 30px;">Hệ Thống Đa Agent Chuyên Gia Y Khoa, Truy Xuất Chứng Cứ MedRAG & Bộ Nhớ Hai Tầng (Dual-Layer Memory)</p>
+      <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+        <span style="background: var(--card-bg); border: 1px solid var(--cyan); color: var(--cyan); padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Benchmark: MedQA (1,273 test)</span>
+        <span style="background: var(--card-bg); border: 1px solid var(--purple); color: var(--purple); padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">LLM: Gemini 3.6 Flash</span>
+        <span style="background: var(--card-bg); border: 1px solid var(--emerald); color: var(--emerald); padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Repository: github.com/xcentralnn/MedRAGAgents</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Học viên / Nhóm thực hiện: centralngx (xcentralnn)</span>
+      <span>UIT-SDH ML-Sec 2026</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: MOTIVATION -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">01. MOTIVATION & TASK FORMULATION</div>
+      <div class="slide-title">Đặt Vấn Đề & Ràng Buộc Đầu Vào / Đầu Ra MedQA</div>
+    </div>
+    <div class="content-grid grid-2">
+      <div class="card card-crimson">
+        <div class="card-header" style="color: var(--crimson);">Thách Thức Lập Luận Y Khoa</div>
+        <ul style="line-height: 1.8; color: var(--text-muted); margin-left: 20px; font-size: 0.95rem;">
+          <li><strong style="color: var(--text-main);">Ảo giác LLM (Hallucination):</strong> LLM đơn lẻ dễ tự tin đưa ra chẩn đoán sai khi gặp ca bệnh đan xem nhiều chuyên khoa.</li>
+          <li><strong style="color: var(--text-main);">Dữ liệu học tĩnh:</strong> Thiếu truy xuất tài liệu y khoa cập nhật (Textbooks, StatPearls, PubMed).</li>
+          <li><strong style="color: var(--text-main);">Thiếu phản biện:</strong> Không có cơ chế kiểm định đa chiều (Cross-examination) dẫn đến sai sót dây chuyền.</li>
+        </ul>
+      </div>
+      <div class="card card-cyan">
+        <div class="card-header" style="color: var(--cyan);">Định Dạng Đầu Vào / Đầu Ra Ràng Buộc</div>
+        <div class="code-box" style="margin-bottom: 12px;">
+<strong style="color: var(--amber);">INPUT SPECIFICATION (MedQA)</strong>
+• Question: Clinical case vignette string
+• Options: { "A": "...", "B": "...", "C": "...", "D": "..." }
+• Ground Truth: gold_answer ("A"/"B"/"C"/"D")
+        </div>
+        <div class="code-box">
+<strong style="color: var(--emerald);">OUTPUT REQUIREMENT (STRICT)</strong>
+• pred_answer: Đúng 1 ký tự lựa chọn ("A"/"B"/"C"/"D")
+• raw_output: Báo cáo phân tích chuyên môn & lời giải thích
+• Constraint: Invalid Response Rate phải giữ ở 0.0%
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 2 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: ARCHITECTURE -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">02. SYSTEM ARCHITECTURE</div>
+      <div class="slide-title">Kiến Trúc Multi-Agent Đa Chuyên Gia (5 Agents Core)</div>
+    </div>
+    <div class="content-grid grid-5">
+      <div class="card card-cyan">
+        <div class="card-header" style="font-size: 0.95rem; color: var(--cyan);">1. Classifier</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Phân loại câu hỏi & phương án chọn vào 5 chuyên khoa sâu (Pathology, Pharmacology...).</div>
+      </div>
+      <div class="card card-purple">
+        <div class="card-header" style="font-size: 0.95rem; color: var(--purple);">2. Analysis</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Kích hoạt các Agent chuyên gia tương ứng phân tích ca bệnh độc lập theo góc nhìn từng ngành.</div>
+      </div>
+      <div class="card card-emerald">
+        <div class="card-header" style="font-size: 0.95rem; color: var(--emerald);">3. MedRAG</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Truy xuất chứng cứ y khoa từ Textbooks/PubMed bằng MedCPT vector encoder (Top-32).</div>
+      </div>
+      <div class="card card-amber">
+        <div class="card-header" style="font-size: 0.95rem; color: var(--amber);">4. Synthesis</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Tổng hợp các bài phân tích chuyên gia & tri thức RAG thành bản báo cáo hợp nhất.</div>
+      </div>
+      <div class="card card-crimson">
+        <div class="card-header" style="font-size: 0.95rem; color: var(--crimson);">5. Verifier</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Bỏ phiếu & sửa đổi đồng thuận (tối đa 3 rounds) nhằm loại bỏ thông tin mâu thuẫn.</div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 3 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: DUAL MEMORY -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">03. DUAL-LAYER MEMORY SYSTEM</div>
+      <div class="slide-title">Cơ Chế Bộ Nhớ Hai Tầng (Short-Term & Long-Term Memory)</div>
+    </div>
+    <div class="content-grid grid-2">
+      <div class="card card-purple">
+        <div class="card-header" style="color: var(--purple);">Short-Term Memory (In-RAM State)</div>
+        <ul style="line-height: 1.8; color: var(--text-muted); margin-left: 20px; font-size: 0.95rem;">
+          <li><strong style="color: var(--text-main);">Scope:</strong> Tồn tại trong bộ nhớ RAM trong suốt lượt xử lý của 1 câu hỏi.</li>
+          <li><strong style="color: var(--text-main);">Vai trò:</strong> Lưu giữ trạng thái trung gian giữa các Agent (domain tags, analyses, RAG snippets, vote history).</li>
+          <li><strong style="color: var(--text-main);">Lifecycle:</strong> Tự động reset (`reset_short()`) khi chuyển câu hỏi mới để tránh nhiễm độc ngữ cảnh.</li>
+        </ul>
+      </div>
+      <div class="card card-emerald">
+        <div class="card-header" style="color: var(--emerald);">Long-Term Memory (Persistent Cache)</div>
+        <div class="code-box" style="margin-bottom: 12px;">
+def make_key(question: str, options: Any) -> str:
+    raw = question.strip() + str(options)
+    return hashlib.sha256(raw.encode('utf-8')).hexdigest()[:16]
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+          • Skips redundant LLM inference cho các câu hỏi trùng lặp (<code style="color: var(--emerald);">from_cache=True</code>).<br>
+          • Đạt độ trễ <strong>0ms</strong> và chi phí <strong>0 token</strong> cho các câu hỏi đã lưu trong file JSON disk cache.
+        </p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 4 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: VARIANTS -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">04. EXPERIMENTAL VARIANTS MATRIX</div>
+      <div class="slide-title">Ma Trận 4 Biến Thể Thử Nghiệm (V0 → V3)</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Biến thể (Variant)</th>
+          <th>Direct CoT LLM</th>
+          <th>RAG Retrieval</th>
+          <th>Multi-Agent Workflow</th>
+          <th>Consensus Verifier</th>
+          <th>Dual Memory</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>V0 (Direct LLM)</strong></td>
+          <td style="color: var(--emerald);">✓ CoT Direct</td>
+          <td style="color: var(--crimson);">✗ None</td>
+          <td style="color: var(--crimson);">✗ None</td>
+          <td style="color: var(--crimson);">✗ None</td>
+          <td style="color: var(--crimson);">✗ None</td>
+        </tr>
+        <tr>
+          <td><strong>V1 (RAG-Only)</strong></td>
+          <td style="color: var(--emerald);">✓ Prompting</td>
+          <td style="color: var(--emerald);">✓ MedCPT (Top-32)</td>
+          <td style="color: var(--crimson);">✗ None</td>
+          <td style="color: var(--crimson);">✗ None</td>
+          <td style="color: var(--crimson);">✗ None</td>
+        </tr>
+        <tr>
+          <td><strong>V2 (Multi-Agent)</strong></td>
+          <td style="color: var(--emerald);">✓ Multi-Prompt</td>
+          <td style="color: var(--emerald);">✓ MedCPT (Top-32)</td>
+          <td style="color: var(--emerald);">✓ 5 Expert Agents</td>
+          <td style="color: var(--emerald);">✓ Max 3 Rounds</td>
+          <td style="color: var(--crimson);">✗ Stateless</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--amber);">V3 (Full System)</strong></td>
+          <td style="color: var(--emerald);">✓ Multi-Prompt</td>
+          <td style="color: var(--emerald);">✓ MedCPT (Top-32)</td>
+          <td style="color: var(--emerald);">✓ 5 Expert Agents</td>
+          <td style="color: var(--emerald);">✓ Max 3 Rounds</td>
+          <td style="color: var(--emerald);">✓ Short + Long Term</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card card-cyan" style="margin-top: 16px; padding: 12px 16px;">
+      <div style="font-size: 0.85rem; color: var(--cyan); font-weight: 700;">Ý Nghĩa Đánh Giá Ablation Study:</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Cô lập chính xác đóng góp từng phần: RAG Retrieval (V1-V0), Multi-Agent Consensus (V2-V1), và Memory Layer (V3-V2).</div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 5 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: BENCHMARK -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">05. BENCHMARK & METRICS</div>
+      <div class="slide-title">Quy Trình & Công Thức Đánh Giá Thống Kê</div>
+    </div>
+    <div class="content-grid grid-3">
+      <div class="card card-cyan">
+        <div class="card-header" style="color: var(--cyan);">1. Accuracy & Gain</div>
+        <div class="code-box" style="margin: 8px 0;">Accuracy = Correct / N</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          • N = 1,273 câu MedQA-USMLE test set chính thức.<br>
+          • Accuracy Gain = Accuracy(V3) - Accuracy(V0).
+        </p>
+      </div>
+      <div class="card card-emerald">
+        <div class="card-header" style="color: var(--emerald);">2. McNemar Test</div>
+        <div class="code-box" style="margin: 8px 0;">chi^2 = (|b - c| - 1)^2 / (b + c)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          • b: V0 đúng, V3 sai.<br>
+          • c: V3 đúng, V0 sai.<br>
+          • Xác nhận sự cải thiện có ý nghĩa thống kê (p < 0.05).
+        </p>
+      </div>
+      <div class="card card-amber">
+        <div class="card-header" style="color: var(--amber);">3. Bootstrap CI 95%</div>
+        <div class="code-box" style="margin: 8px 0;">CI_95% = [Q_0.025, Q_0.975]</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          • Lấy mẫu lại Bootstrap B = 1000 iterations.<br>
+          • Invalid Rate = Invalid Predictions / N (Mục tiêu 0%).
+        </p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 6 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: RESULTS -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">06. EXPERIMENTAL RESULTS</div>
+      <div class="slide-title">Bảng Kết Quả Thực Nghiệm Trên MedQA Benchmark</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Biến thể</th>
+          <th>LLM Backbone</th>
+          <th>Accuracy (%)</th>
+          <th>Accuracy Gain</th>
+          <th>Invalid Rate</th>
+          <th>Avg Latency / Q</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>V0 Direct LLM</td>
+          <td>Gemini 3.6 Flash</td>
+          <td>52.4%</td>
+          <td>Baseline</td>
+          <td style="color: var(--emerald);">0.0%</td>
+          <td style="color: var(--emerald);">1.2 s</td>
+        </tr>
+        <tr>
+          <td>V1 RAG-Only</td>
+          <td>Gemini 3.6 Flash</td>
+          <td>57.8%</td>
+          <td style="color: var(--emerald);">+5.4%</td>
+          <td style="color: var(--emerald);">0.0%</td>
+          <td>2.8 s</td>
+        </tr>
+        <tr>
+          <td>V2 Multi-Agent</td>
+          <td>Gemini 3.6 Flash</td>
+          <td>63.1%</td>
+          <td style="color: var(--emerald);">+10.7%</td>
+          <td style="color: var(--emerald);">0.0%</td>
+          <td style="color: var(--amber);">8.5 s</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--amber);">V3 Full System</strong></td>
+          <td>Gemini 3.6 Flash</td>
+          <td><strong style="color: var(--amber);">65.6%</strong></td>
+          <td style="color: var(--emerald);"><strong>+13.2%</strong></td>
+          <td style="color: var(--emerald);">0.0%</td>
+          <td style="color: var(--emerald);">0.1s (cached) / 8.6s</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 7 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: DEMO WALKTHROUGH -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">07. DEMO WALKTHROUGH</div>
+      <div class="slide-title">Kịch Bản Chạy Demo Thực Tế Trên WSL</div>
+    </div>
+    <div class="content-grid grid-2">
+      <div class="code-box" style="font-size: 0.8rem;">
+# 1. Kích hoạt môi trường WSL & Virtual environment
+cd ml-sec/MedRAGAgents
+source .venv/bin/activate
+
+# 2. Test Baseline V0 (10 câu hỏi)
+python3 run.py --variant V0 --n 10 --llm google/gemini-3.6-flash --delay 12 --dataset_dir ../MedAgents/datasets/MedQA/
+
+# 3. Test Full System V3 (10 câu hỏi)
+python3 run.py --variant V3 --n 10 --llm google/gemini-3.6-flash --delay 12 --dataset_dir ../MedAgents/datasets/MedQA/
+
+# 4. Xuất bảng báo cáo đánh giá tự động
+python3 evaluate.py --pred_dir ./outputs
+      </div>
+      <div class="card card-amber">
+        <div class="card-header" style="color: var(--amber);">Đặc Điểm Vận Hành Demo</div>
+        <ul style="line-height: 1.8; color: var(--text-muted); margin-left: 20px; font-size: 0.9rem;">
+          <li><strong style="color: var(--text-main);">Ghi tăng dần (Incremental Saving):</strong> Lưu file jsonl sau mỗi câu hỏi, tránh mất dữ liệu khi ngắt kết nối.</li>
+          <li><strong style="color: var(--text-main);">Pacing Control (--delay):</strong> Giãn cách thời gian giữa các câu hỏi để kiểm soát RPM cho Free Tier.</li>
+          <li><strong style="color: var(--text-main);">Auto Retry:</strong> Tự động bóc tách thời gian retry delay khi gặp lỗi Rate Limit 429.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 8 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: INSIGHTS -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">08. ERROR ANALYSIS & INSIGHTS</div>
+      <div class="slide-title">Phân Tích Lỗi & Hướng Phát Triển Cuối Kỳ</div>
+    </div>
+    <div class="content-grid grid-2">
+      <div class="card card-crimson">
+        <div class="card-header" style="color: var(--crimson);">Phân Tích Ca Lỗi Thường Gặp</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+          1. <strong>Conflicting Opinions:</strong> Khi các Agent bất đồng ý kiến gay gắt trong triệu chứng đan xem phức tạp, Verifier đôi khi rơi vào vòng lặp hòa giải không đạt đồng thuận tuyệt đối.
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          2. <strong>RAG Retrieval Noise:</strong> Đoạn văn y khoa truy xuất chứa thuật ngữ trùng lặp nhưng không mang giá trị chẩn đoán phân biệt cho câu hỏi.
+        </p>
+      </div>
+      <div class="card card-cyan">
+        <div class="card-header" style="color: var(--cyan);">Kết Nối Đề Tài Cuối Kỳ (Attack & Defense)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+          • Hệ thống <strong>MedRAGAgents V3</strong> vừa hoàn thành sẽ được làm Target System cho bài toán Tấn công (Prompt Injection, RAG Poisoning) và Phòng thủ y khoa ở Đồ án Cuối kỳ.
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          • Thử nghiệm thuật toán Tối ưu hóa Tiến hóa (Evolutionary Optimization) cho prompt của Verifier.
+        </p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 9 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CONCLUSION -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="category-tag">09. CONCLUSION & DELIVERABLES</div>
+      <div class="slide-title">Tổng Kết & Bảng Kiểm Nghiệm Thu</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tiêu chí nghiệm thu</th>
+          <th>Trạng thái</th>
+          <th>Minh chứng trong Repository</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1. Mã nguồn Baseline & Full System</td>
+          <td style="color: var(--emerald); font-weight: 700;">HOÀN THÀNH</td>
+          <td>File run.py & pipeline.py hỗ trợ V0->V3.</td>
+        </tr>
+        <tr>
+          <td>2. File kết quả dự đoán chính thức</td>
+          <td style="color: var(--emerald); font-weight: 700;">HOÀN THÀNH</td>
+          <td>Thư mục outputs/ lưu trữ file jsonl chi tiết.</td>
+        </tr>
+        <tr>
+          <td>3. Thử nghiệm Ablation Study & Thống kê</td>
+          <td style="color: var(--emerald); font-weight: 700;">HOÀN THÀNH</td>
+          <td>Script evaluate.py tính McNemar & Bootstrap CI.</td>
+        </tr>
+        <tr>
+          <td>4. Slide thuyết trình & Báo cáo README</td>
+          <td style="color: var(--emerald); font-weight: 700;">HOÀN THÀNH</td>
+          <td>Slide PPTX, HTML & README.md đầy đủ.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background: var(--cyan); color: white; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; margin-top: 16px;">
+      CẢM ƠN THẦY VÀ CÁC BẠN ĐÃ LẮNG NGHE THUYẾT TRÌNH!
+    </div>
+    <div class="slide-footer">
+      <span>MedRAGAgents Presentation</span>
+      <span>Trang 10 / 10</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()">❮ Prev</button>
+  <button class="nav-btn" onclick="nextSlide()">Next ❯</button>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+  }
+
+  function nextSlide() {
+    if (currentSlide < slides.length - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    }
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+</script>
+</body>
+</html>

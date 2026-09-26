@@ -1,0 +1,114 @@
+\section{Architecture Overview and System Engineering}
+\label{sec:architecture_overview}
+
+MedRAGAgents decouples complex clinical reasoning into modular, single-responsibility units coordinated by a central pipeline orchestrator. Figure~\ref{fig:system_architecture} illustrates the end-to-end dataflow across the entire architecture.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  % Nodes
+  \node [monobox] (dataset) {Dataset Ingestion\\(\texttt{run.py})};
+  \node [monobox, right=of dataset] (pipeline) {Pipeline Controller\\(\texttt{pipeline.py})};
+  \node [monodiamond, right=of pipeline] (variant) {Variant\\Selector};
+  
+  \node [monobox, above right=1.2cm and 1.2cm of variant] (v0) {V0 Baseline\\(Direct CoT)};
+  \node [monobox, right=1.2cm of variant] (v1) {V1 RAG-Only\\(MedCPT + LLM)};
+  \node [monobox, below right=1.2cm and 1.2cm of variant] (v3) {V3 Full System\\(Agents+RAG+Mem)};
+  
+  \node [monobox, right=1.2cm of v3] (memory) {Memory Manager\\(\texttt{memory.py})};
+  \node [monobox, above=0.8cm of memory] (agents) {Agent Suite\\(\texttt{agents/*.py})};
+  \node [monobox, below=0.8cm of memory] (rag) {MedCPT Engine\\(\texttt{corpus/textbooks})};
+  
+  \node [monobox, right=1.2cm of v1] (output) {JSONL Prediction\\(\texttt{outputs/*.jsonl})};
+  \node [monobox, right=1.2cm of output] (eval) {Statistical Evaluator\\(\texttt{evaluate.py})};
+
+  % Path lines (Clean orthogonal paths, zero box collisions)
+  \draw [monoline] (dataset) -- (pipeline);
+  \draw [monoline] (pipeline) -- (variant);
+  
+  \draw [monoline] (variant.east) |- (v0.west);
+  \draw [monoline] (variant.east) -- (v1.west);
+  \draw [monoline] (variant.east) |- (v3.west);
+  
+  \draw [monoline] (v3.east) -- (memory.west);
+  \draw [monoline] (memory.north) -- (agents.south);
+  \draw [monoline] (memory.south) -- (rag.north);
+  
+  \draw [monoline] (v0.east) -| (output.north);
+  \draw [monoline] (v1.east) -- (output.west);
+  \draw [monoline] (memory.east) -| (output.south);
+  \draw [monoline] (output.east) -- (eval.west);
+
+  % Subsystem boxes
+  \begin{scope}[on background layer]
+    \node [monogroup, fit=(v3) (memory) (agents) (rag), label=below:Unified V3 Engine Pipeline] {};
+  \end{scope}
+\end{tikzpicture}%
+}
+\caption{High-Level End-to-End System Architecture of MedRAGAgents.}
+\label{fig:system_architecture}
+\end{figure}
+
+\subsection{Architectural Decoupling and Module Hierarchy}
+
+The codebase is organized into four core functional layers:
+
+\begin{enumerate}
+    \item \textbf{Orchestration Layer} (\texttt{run.py}, \texttt{pipeline.py}): Handles dataset loading, CLI argument parsing, runtime batching, stream output serialisation, and instantiates the selected variant execution model.
+    \item \textbf{Agentic Reasoning Layer} (\texttt{agents/}): Encapsulates domain classification, specialized diagnostic analysis, cross-domain report synthesis, and consensus verification logic into discrete agent classes inheriting from \texttt{BaseAgent}.
+    \item \textbf{Knowledge Retrieval Layer} (\texttt{agents/rag\_agent.py}, \texttt{corpus/}): Encapsulates the MedCPT dense vector search engine and preprocessed medical textbook chunk indices.
+    \item \textbf{State Management Layer} (\texttt{memory.py}): Coordinates transient intra-vignette scratchpad storage (\texttt{ShortTermMemory}) and persistent disk cache storage (\texttt{LongTermMemory}).
+\end{enumerate}
+
+Figure~\ref{fig:component_decomposition} illustrates the structural subsystem dependencies and component communication paths within MedRAGAgents.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.2cm and 1.5cm, auto]
+  % Upper tier: Orchestration
+  \node [monobox] (run) {\texttt{run.py}\\(CLI Interface)};
+  \node [monobox, right=1.5cm of run] (pipe) {\texttt{pipeline.py}\\(Variant Coordinator)};
+  \node [monobox, right=1.5cm of pipe] (base) {\texttt{agents/base\_agent.py}\\(Provider Wrapper)};
+
+  % Middle tier: Agents
+  \node [monobox, below right=1.5cm and -1.0cm of run] (dom) {\texttt{DomainAgent}};
+  \node [monobox, right=0.8cm of dom] (ana) {\texttt{AnalysisAgent}};
+  \node [monobox, right=0.8cm of ana] (syn) {\texttt{SynthesisAgent}};
+  \node [monobox, right=0.8cm of syn] (ver) {\texttt{VerifierAgent}};
+
+  % Lower tier: Data and Memory
+  \node [monobox, below=1.5cm of dom] (short) {\texttt{ShortTermMemory}\\(In-RAM Bus)};
+  \node [monobox, below=1.5cm of ana] (long) {\texttt{LongTermMemory}\\(SHA-256 Cache)};
+  \node [monobox, below=1.5cm of ver] (rag) {\texttt{RAGAgent}\\(MedCPT Engine)};
+
+  % Clean orthogonal routing
+  \draw [monoline] (run) -- (pipe);
+  \draw [monoline] (pipe) -- (base);
+  
+  \draw [monoline] (pipe.south) -- ++(0,-0.5) -| (dom.north);
+  \draw [monoline] (pipe.south) -- ++(0,-0.5) -| (ana.north);
+  \draw [monoline] (pipe.south) -- ++(0,-0.5) -| (syn.north);
+  \draw [monoline] (pipe.south) -- ++(0,-0.5) -| (ver.north);
+
+  \draw [monoline] (dom.south) -- (short.north);
+  \draw [monoline] (ana.south) -- (long.north);
+  \draw [monoline] (ver.south) -- (rag.north);
+  \draw [monoline] (syn.south) -- ++(0,-0.6) -| (long.north);
+
+\end{tikzpicture}%
+}
+\caption{Subsystem Component Decomposition and Module Interdependencies.}
+\label{fig:component_decomposition}
+\end{figure}
+
+\subsection{Architectural Invariants and Design Guarantees}
+
+The system enforces three strict design guarantees:
+
+\begin{itemize}
+    \item \textbf{Stateless Agent Invariant}: Agents do not retain internal mutable state across invocations. All operational context must be explicitly passed via parameters or retrieved from the \texttt{ShortTermMemory} bus.
+    \item \textbf{Context Boundary Invariant}: Short-term memory is forcibly purged prior to processing a new clinical vignette, preventing context bleeding between separate test cases.
+    \item \textbf{Deterministic Formatting Guarantee}: All agent outputs undergo structural validation and regex extraction. Unparseable responses trigger strict retry loops, guaranteeing an invalid response rate of $0.0\%$.
+\end{itemize}

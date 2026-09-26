@@ -1,0 +1,124 @@
+\section{Implementation Details and Code Architecture}
+\label{sec:implementation_details}
+
+The MedRAGAgents codebase follows a modular Python architecture designed for clarity, extensibility, and maintainability. This section outlines key class implementations and interface abstractions.
+
+\subsection{Base Agent Abstraction Layer (\texttt{agents/base\_agent.py})}
+
+All agent modules inherit from \texttt{BaseAgent}, which wraps underlying API provider models (Google Gemini, OpenAI, Anthropic) with standard error handling, rate limiting, and output parsing.
+
+Listing~\ref{lst:base_agent} demonstrates the base agent execution and regex extraction logic.
+
+\begin{lstlisting}[language=Python, caption={BaseAgent Core Call and Answer Extraction Implementation.}, label={lst:base_agent}]
+import re
+import time
+import google.generativeai as genai
+import config as cfg
+
+class BaseAgent:
+    def __init__(self, llm_name: str = None, max_tokens: int = 1000):
+        self.llm_name = llm_name or cfg.DEFAULT_LLM
+        self.max_tokens = max_tokens
+        self._init_client()
+
+    def call(self, system: str, user: str) -> str:
+        """Executes API invocation with retry logic."""
+        for attempt in range(3):
+            try:
+                response = self.model.generate_content(
+                    f"{system}\n\n{user}",
+                    generation_config={"max_output_tokens": self.max_tokens}
+                )
+                return response.text.strip()
+            except Exception as e:
+                time.sleep(2 ** attempt)
+        return ""
+
+    @staticmethod
+    def extract_answer_letter(text: str) -> str:
+        """Extracts option letter (A-E) via regex fallback."""
+        match = re.search(r'Option:\s*([A-E])', text, re.IGNORECASE)
+        if match:
+            return match.group(1).upper()
+        match_alt = re.search(r'\b([A-E])\b', text)
+        return match_alt.group(1).upper() if match_alt else ""
+\end{lstlisting}
+
+\subsection{Pipeline Orchestration (\texttt{pipeline.py})}
+
+The pipeline orchestrator configures and executes system variants. Listing~\ref{lst:v3_pipeline} shows the core execution flow for Variant V3.
+
+\begin{lstlisting}[language=Python, caption={Variant V3 Full Pipeline Execution Logic in pipeline.py.}, label={lst:v3_pipeline}]
+class V3FullSystem:
+    def run(self, question: str, options=None, gold_answer: str = "") -> dict:
+        options_str = _format_options(options)
+        rec = _empty_record(question, options, gold_answer)
+
+        # Long-Term Memory Lookup
+        cached = self.mem.long.get(question, options)
+        if cached:
+            rec.update(cached)
+            rec["from_cache"] = True
+            return rec
+
+        # Short-Term Memory Reset
+        self.mem.reset_short()
+
+        # Step 1: Domain Classification
+        q_domains = self.domain_agent.classify_question_domains(question)
+        o_domains = self.domain_agent.classify_option_domains(question, options_str)
+        self.mem.short.store("q_domains", q_domains)
+        self.mem.short.store("o_domains", o_domains)
+
+        # Step 2: Specialty Analyses
+        q_analyses = self.analysis_agent.run_question_analyses(
+            question, self.mem.short.get("q_domains")
+        )
+        o_analyses = self.analysis_agent.run_option_analyses(
+            question, options_str, self.mem.short.get("o_domains"), q_analyses
+        )
+
+        # Step 3: MedRAG Retrieval & Context Injection
+        rag_result = self.rag_agent.answer(question=question, options=options)
+        if rag_result["snippets"]:
+            q_analyses["RAG Evidence"] = self._summarise_snippets(rag_result["snippets"])
+
+        # Step 4: Synthesis & Consensus Verification
+        syn_report = self.synthesis_agent.synthesise(question, options_str, q_analyses, o_analyses)
+        verif = self.verifier_agent.verify_and_answer(syn_report, q_domains + o_domains)
+
+        rec.update({"pred_answer": verif["pred_answer"], "syn_report": verif["final_syn_report"]})
+        self.mem.long.store(question, options, rec, autosave=True)
+        return rec
+\end{lstlisting}
+
+\subsection{Memory Management Implementation (\texttt{memory.py})}
+
+Listing~\ref{lst:long_term_memory} displays the SHA-256 key generation and caching implementation within \texttt{LongTermMemory}.
+
+\begin{lstlisting}[language=Python, caption={SHA-256 Key Generation and Disk Caching in memory.py.}, label={lst:long_term_memory}]
+import hashlib
+import json
+import os
+
+class LongTermMemory:
+    def __init__(self, cache_path: str = "./memory/long_term_cache.json"):
+        self.cache_path = cache_path
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        self._cache = self._load()
+
+    @staticmethod
+    def make_key(question: str, options: any) -> str:
+        raw = question.strip() + str(options)
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+    def get(self, question: str, options: any):
+        key = self.make_key(question, options)
+        return self._cache.get(key)
+
+    def store(self, question: str, options: any, record: dict, autosave: bool = True):
+        key = self.make_key(question, options)
+        self._cache[key] = record
+        if autosave:
+            self.save()
+\end{lstlisting}

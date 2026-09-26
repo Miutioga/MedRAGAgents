@@ -1,0 +1,30 @@
+\section{Engineering Trade-Offs, Limitations, and Roadmap}
+\label{sec:tradeoffs_and_future}
+
+Architectural design involves balancing competing engineering constraints. This section details system trade-offs, identifies current limitations, and outlines future enhancements.
+
+\subsection{Engineering Trade-Offs Analysis}
+
+\begin{enumerate}
+    \item \textbf{Latency vs. Diagnostic Accuracy}: Multi-agent verification loops increase per-vignette reasoning quality but add computational overhead. Variant V0 completes execution in $1.8\text{ s}$, whereas Variant V3 requires $14.2\text{ s}$ per cold-cache evaluation due to sequential agent invocations.
+    \item \textbf{Retrieval Depth vs. Context Overhead}: Expanding dense retrieval depth ($K=32$) improves knowledge coverage but risks flooding prompt contexts with tangential evidence. Truncating snippets to 300 characters strikes a balance between factual precision and token constraints.
+    \item \textbf{In-RAM Flexibility vs. Disk Persistence}: Storing transient intermediate outputs in \texttt{ShortTermMemory} provides low-latency data access during execution, while offloading persistent records to \texttt{LongTermMemory} preserves system state across evaluation runs.
+\end{enumerate}
+
+\subsection{System Limitations}
+
+\begin{itemize}
+    \item \textbf{Sequential Verification Bottleneck}: The current verification loop evaluates dissenting domain advice sequentially, introducing latency overhead during multi-round consensus iterations.
+    \item \textbf{Text-Only Modality}: The current architecture processes text-based clinical vignettes and cannot natively ingest diagnostic medical imaging (e.g., CT scans, MRI, histopathology slides).
+    \item \textbf{Static Knowledge Index}: The MedCPT retrieval store relies on a static textbook snapshot, requiring manual re-indexing to incorporate newly published clinical trials or treatment guidelines.
+\end{itemize}
+
+\subsection{Future Architectural Roadmap}
+
+Future development will focus on three architectural enhancements:
+
+\begin{enumerate}
+    \item \textbf{Graph-Augmented Biomedical Retrieval}: Integrating structured Knowledge Graphs (e.g., UMLS, SNOMED-CT) alongside dense vector search to retrieve explicit medical relation triples (e.g., \texttt{Drug} $\xrightarrow{\text{inhibits}}$ \texttt{Enzyme}).
+    \item \textbf{Dynamic Agent Recruiting}: Replacing fixed domain assignment with an adaptive recruitment router that dynamically spawns specialized sub-agents based on vignette complexity.
+    \item \textbf{Multimodal Diagnostic Expansion}: Incorporating vision-language model backbones to support combined clinical vignette and medical imaging evaluations.
+\end{enumerate}

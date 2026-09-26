@@ -1,0 +1,54 @@
+\contentsline {section}{\numberline {1}Introduction and System Motivation}{4}{section.1}%
+\contentsline {section}{\numberline {2}Domain Context and Problem Formulation}{7}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Formal Mathematical Definition}{7}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Multi-Specialty Domain Mapping}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Dense Vector Retrieval Formulation}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Iterative Consensus Voting Model}{8}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Architecture Overview and System Engineering}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Architectural Decoupling and Module Hierarchy}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Architectural Invariants and Design Guarantees}{9}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Multi-Specialty Agent Decomposition Engine}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Domain Classification Agent (\texttt {DomainAgent})}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Specialized Domain Analysis Agents (\texttt {AnalysisAgent})}{11}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Diagnostic Synthesis Engine (\texttt {SynthesisAgent})}{12}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Consensus Verification and Voting Protocol (\texttt {VerifierAgent})}{12}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Biomedical Retrieval-Augmented Generation (MedRAG)}{14}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Biomedical Corpus Architecture and Indexing}{14}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}MedCPT Dense Vector Retrieval Engine}{14}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Context Injection and Evidence Fusion}{15}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Dual-Layer Memory Infrastructure}{16}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Short-Term In-RAM Memory Bus (\texttt {ShortTermMemory})}{16}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Long-Term Persistent Storage (\texttt {LongTermMemory})}{16}{subsection.6.2}%
+\contentsline {section}{\numberline {7}System Variants and Architectural Hierarchy}{18}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Variant Progression Hierarchy}{18}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Variant Specifications}{18}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Implementation Details and Code Architecture}{20}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Base Agent Abstraction Layer (\texttt {agents/base\_agent.py})}{20}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Pipeline Orchestration (\texttt {pipeline.py})}{20}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Memory Management Implementation (\texttt {memory.py})}{22}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Statistical Evaluation Methodology}{23}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Primary Evaluation Metrics}{23}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Non-Parametric Bootstrap Confidence Intervals}{23}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}McNemar Significance Testing}{24}{subsection.9.3}%
+\contentsline {section}{\numberline {10}Empirical Results and Performance Analysis}{25}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Quantitative Performance Comparison}{25}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Paired Win/Loss Comparison and Statistical Significance}{25}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Computational Latency and Token Profiles}{26}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Failure Analysis and Fault Tolerance}{27}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Diagnostic Failure Taxonomy}{27}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Fault-Tolerant Circuit Breaker Pipeline}{27}{subsection.11.2}%
+\contentsline {section}{\numberline {12}Operational Engineering and Deployment Specification}{29}{section.12}%
+\contentsline {subsection}{\numberline {12.1}CLI Command Interface (\texttt {run.py})}{29}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Production Execution Guidelines}{29}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Rate-Limiting Buffer and Security Controls}{30}{subsection.12.3}%
+\contentsline {section}{\numberline {13}Engineering Trade-Offs, Limitations, and Roadmap}{31}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Engineering Trade-Offs Analysis}{31}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}System Limitations}{31}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Future Architectural Roadmap}{31}{subsection.13.3}%
+\contentsline {section}{\numberline {14}Conclusion}{32}{section.14}%
+\contentsline {section}{Appendix}{33}{section.14}%
+\contentsline {section}{\numberline {A}System Prompts and Agent Directives}{33}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Domain Classification Directives}{33}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Consensus Verification Directives}{33}{subsection.A.2}%
+\contentsline {section}{\numberline {B}Data Schemas and Record Specifications}{33}{appendix.B}%
+\contentsline {section}{\numberline {C}Derivation of Non-Parametric Bootstrap Algorithm}{34}{appendix.C}%

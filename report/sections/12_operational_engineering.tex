@@ -1,0 +1,64 @@
+\section{Operational Engineering and Deployment Specification}
+\label{sec:operational_engineering}
+
+Deploying agentic reasoning architectures in production requires strict rate-limiting, environment isolation, and reproducible execution pipelines. This section details operational configurations, command-line interfaces, and deployment guidelines for MedRAGAgents.
+
+\subsection{CLI Command Interface (\texttt{run.py})}
+
+The main entry point \texttt{run.py} controls pipeline execution via command-line arguments. Table~\ref{tab:cli_params} details the available CLI parameters.
+
+\begin{table}[h!]
+\centering
+\caption{Command-Line Interface Parameter Specifications for \texttt{run.py}.}
+\label{tab:cli_params}
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{CLI Parameter} & \textbf{Data Type} & \textbf{Default Value} & \textbf{Operational Function} \\
+\midrule
+\texttt{--variant} & String & \texttt{V3} & Selects target system variant (\texttt{V0}, \texttt{V1}, \texttt{V2}, \texttt{V3}, or \texttt{ALL}). \\
+\texttt{--n} & Integer & \texttt{-1} & Sets evaluation sample limit ($10$ for quick testing, $-1$ for full dataset). \\
+\texttt{--start} & Integer & \texttt{0} & Specifies starting vignette index for parallel batch processing. \\
+\texttt{--llm} & String & \texttt{cfg.DEFAULT\_LLM} & Sets foundation model backbone (\texttt{google/gemini-3.6-flash}). \\
+\texttt{--delay} & Float & \texttt{2.0} & Enforces inter-vignette delay (seconds) to prevent API rate-limit errors. \\
+\texttt{--dataset\_dir} & Path & \texttt{./datasets/MedQA/} & Specifies directory path to input \texttt{test.jsonl} file. \\
+\texttt{--output\_dir} & Path & \texttt{./outputs} & Specifies output directory for generated prediction files. \\
+\texttt{--evaluate} & Flag & \texttt{False} & Triggers automated evaluation script (\texttt{evaluate.py}) upon run completion. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Production Execution Guidelines}
+
+To execute a complete evaluation across all four variants on the MedQA-USMLE test set with automated statistical reporting:
+
+\begin{lstlisting}[language=bash, caption={Production Execution Shell Command.}, label={lst:cli_run}]
+# Step 1: Initialize Virtual Environment and Dependencies
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Step 2: Download MedCPT Textbooks Corpus Vector Index
+python3 download_corpus.py
+
+# Step 3: Execute All Variants with Rate-Limit Protection and Auto-Evaluation
+PYTHONUNBUFFERED=1 python3 run.py \
+  --variant ALL \
+  --n 10 \
+  --delay 2.0 \
+  --evaluate 2>&1 | tee outputs/run_execution.log
+\end{lstlisting}
+
+\subsection{Rate-Limiting Buffer and Security Controls}
+
+API requests are throttled using an adjustable inter-call delay parameter (\texttt{--delay}). On free-tier API quotas (e.g., 5 RPM limit), setting \texttt{--delay 12.0} maintains compliance with remote quota restrictions.
+
+Environment variables are managed securely via \texttt{.env} files, isolating secret API credentials from the repository codebase:
+
+\begin{lstlisting}[language=bash, caption={Environment Configuration File (.env).}, label={lst:env_spec}]
+GEMINI_API_KEY=your_secure_api_key_here
+DEFAULT_LLM=google/gemini-3.6-flash
+DATASET_DIR=./datasets/MedQA/
+OUTPUT_DIR=./outputs
+LONG_TERM_MEM=./memory/long_term_cache.json
+\end{lstlisting}

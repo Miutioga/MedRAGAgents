@@ -1,0 +1,37 @@
+======================================================================
+  MedRAGAgents BENCHMARK LEADERBOARD (PLAIN TEXT TABLE)
+======================================================================
++---------+-------+---------+----------+--------------+------------------+
+| Variant | Total | Correct | Accuracy | Invalid Rate | 95% CI           |
++---------+-------+---------+----------+--------------+------------------+
+| V0      | 68    | 44      | 0.6471   | 0.0588       | (0.5294, 0.7647) |
+| V1      | 38    | 30      | 0.7895   | 0.0000       | (0.6316, 0.9211) |
+| V2      | 29    | 22      | 0.7586   | 0.0000       | (0.5862, 0.8966) |
+| V3      | 30    | 24      | 0.8000   | 0.0000       | (0.6333, 0.9333) |
++---------+-------+---------+----------+--------------+------------------+
+
+  Accuracy Gain (V3 - V0): +0.1529
+
+--------------------------------------------------
+  Paired Comparison: V0 (baseline) vs V3 (full)
+--------------------------------------------------
+  Win  (V3 correct, V0 wrong): 4 (40.0%)
+  Loss (V0 correct, V3 wrong): 1 (10.0%)
+  Tie  (Both correct / wrong): 5
+  McNemar statistic           : 0.8 (p ≈ 0.3711)
+
+--------------------------------------------------
+  Error Analysis — V3 (top 10)
+--------------------------------------------------
+  01. [WRONG: pred=B, gold=C]
+      Q: A junior orthopaedic surgery resident is completing a carpal tunnel repair with the department chairman as the attending…
+  02. [WRONG: pred=C, gold=E]
+      Q: A 39-year-old man presents to the emergency department because of progressively worsening chest pain and nausea that sta…
+  03. [WRONG: pred=B, gold=C]
+      Q: A junior orthopaedic surgery resident is completing a carpal tunnel repair with the department chairman as the attending…
+  04. [WRONG: pred=C, gold=E]
+      Q: A 39-year-old man presents to the emergency department because of progressively worsening chest pain and nausea that sta…
+  05. [WRONG: pred=B, gold=C]
+      Q: A junior orthopaedic surgery resident is completing a carpal tunnel repair with the department chairman as the attending…
+  06. [WRONG: pred=C, gold=E]
+      Q: A 39-year-old man presents to the emergency department because of progressively worsening chest pain and nausea that sta…

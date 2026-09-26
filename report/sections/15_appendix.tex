@@ -1,0 +1,89 @@
+\appendix
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+\section{System Prompts and Agent Directives}
+\label{app:prompts}
+
+This appendix presents the exact system directives and prompt templates employed by the agent modules.
+
+\subsection{Domain Classification Directives}
+
+\begin{lstlisting}[language=bash, caption={Domain Classification System Directive.}, label={lst:prompt_domain}]
+System Directive:
+You are an expert medical domain classifier. Analyze the provided clinical vignette and identify up to 5 primary medical subspecialties relevant to diagnosing the case (e.g., Cardiology, Nephrology, Pathology, Pharmacology, Neurology).
+
+Format your output strictly as a comma-separated list of domains:
+Domains: [Domain 1], [Domain 2], [Domain 3]
+\end{lstlisting}
+
+\subsection{Consensus Verification Directives}
+
+\begin{lstlisting}[language=bash, caption={Verifier Agent Voting Directive.}, label={lst:prompt_verifier}]
+System Directive:
+You are a senior clinical reviewer representing the domain specialist: {domain_name}.
+Review the following diagnostic synthesis report for the clinical vignette.
+
+Determine if the diagnosis and option selection are factually accurate and logically sound from your specialty perspective.
+
+Output your response strictly in the format:
+Vote: [YES or NO]
+Advice: [Provide specific revision instructions if NO, otherwise write NONE]
+\end{lstlisting}
+
+\section{Data Schemas and Record Specifications}
+\label{app:schemas}
+
+Each prediction record saved to \texttt{outputs/<VARIANT>\_predictions.jsonl} follows the JSON schema specification detailed in Listing~\ref{lst:json_schema}.
+
+\begin{lstlisting}[language=Python, caption={Serialized JSON Prediction Record Schema.}, label={lst:json_schema}]
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MedRAGAgentsPredictionRecord",
+  "type": "object",
+  "properties": {
+    "question": { "type": "string" },
+    "options": { "type": "object" },
+    "gold_answer": { "type": "string" },
+    "pred_answer": { "type": "string" },
+    "raw_output": { "type": "string" },
+    "snippets": { "type": "array" },
+    "scores": { "type": "array" },
+    "question_domains": { "type": "array" },
+    "option_domains": { "type": "array" },
+    "syn_report": { "type": "string" },
+    "vote_history": { "type": "array" },
+    "revision_history": { "type": "array" },
+    "from_cache": { "type": "boolean" }
+  },
+  "required": ["question", "options", "gold_answer", "pred_answer"]
+}
+\end{lstlisting}
+
+\section{Derivation of Non-Parametric Bootstrap Algorithm}
+\label{app:bootstrap}
+
+Listing~\ref{lst:bootstrap_code} details the non-parametric bootstrap estimation procedure used to derive 95\% confidence intervals for classification accuracy.
+
+\begin{lstlisting}[language=Python, caption={Non-Parametric Bootstrap Resampling Algorithm in evaluate.py.}, label={lst:bootstrap_code}]
+import numpy as np
+
+def bootstrap_confidence_interval(y_true, y_pred, n_bootstraps=1000, ci=95):
+    """Computes non-parametric bootstrap confidence interval for accuracy."""
+    n_samples = len(y_true)
+    bootstrapped_accuracies = []
+    rng = np.random.RandomState(42)
+
+    for _ in range(n_bootstraps):
+        indices = rng.choice(n_samples, size=n_samples, replace=True)
+        sample_true = [y_true[i] for i in indices]
+        sample_pred = [y_pred[i] for i in indices]
+        acc = sum(t == p for t, p in zip(sample_true, sample_pred)) / n_samples
+        bootstrapped_accuracies.append(acc)
+
+    lower_p = (100 - ci) / 2.0
+    upper_p = 100 - lower_p
+    lower = np.percentile(bootstrapped_accuracies, lower_p)
+    upper = np.percentile(bootstrapped_accuracies, upper_p)
+    return lower, upper
+\end{lstlisting}

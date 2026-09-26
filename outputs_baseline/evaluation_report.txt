@@ -1,0 +1,39 @@
+======================================================================
+  MedRAGAgents BENCHMARK LEADERBOARD (PLAIN TEXT TABLE)
+======================================================================
++---------+-------+---------+----------+--------------+------------------+
+| Variant | Total | Correct | Accuracy | Invalid Rate | 95% CI           |
++---------+-------+---------+----------+--------------+------------------+
+| V0      | 50    | 20      | 0.4000   | 0.0000       | (0.2600, 0.5400) |
+| V3      | 20    | 12      | 0.6000   | 0.0000       | (0.3500, 0.8000) |
++---------+-------+---------+----------+--------------+------------------+
+
+  Accuracy Gain (V3 - V0): +0.2000
+
+--------------------------------------------------
+  Paired Comparison: V0 (baseline) vs V3 (full)
+--------------------------------------------------
+  Win  (V3 correct, V0 wrong): 2 (10.0%)
+  Loss (V0 correct, V3 wrong): 1 (5.0%)
+  Tie  (Both correct / wrong): 17
+  McNemar statistic           : 0.0 (p ≈ 1.0)
+
+--------------------------------------------------
+  Error Analysis — V3 (top 10)
+--------------------------------------------------
+  01. [WRONG: pred=B, gold=C]
+      Q: A junior orthopaedic surgery resident is completing a carpal tunnel repair with the department chairman as the attending…
+  02. [WRONG: pred=C, gold=E]
+      Q: A 39-year-old man presents to the emergency department because of progressively worsening chest pain and nausea that sta…
+  03. [WRONG: pred=E, gold=D]
+      Q: A 72-year-old man comes to the physician because of a 2-month history of fatigue and worsening abdominal pain. During th…
+  04. [WRONG: pred=E, gold=B]
+      Q: A 20-year-old man comes to the physician because of worsening gait unsteadiness and bilateral hearing loss for 1 month. …
+  05. [WRONG: pred=E, gold=D]
+      Q: A microbiologist is studying the emergence of a virulent strain of the virus. After a detailed study of the virus and it…
+  06. [WRONG: pred=D, gold=E]
+      Q: A 7-year-old boy is brought to his pediatrician’s office for a follow-up visit. He was diagnosed with asthma when he was…
+  07. [WRONG: pred=A, gold=B]
+      Q: A 29-year-old man presents to the emergency department due to central chest pain over the past 3 days which is constant …
+  08. [WRONG: pred=C, gold=E]
+      Q: A 46-year-old man is brought to the emergency department for evaluation of altered mental status. He was found on the fl…

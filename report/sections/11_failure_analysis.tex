@@ -1,0 +1,68 @@
+\section{Failure Analysis and Fault Tolerance}
+\label{sec:failure_analysis}
+
+A production-grade biomedical reasoning system must incorporate explicit fault-tolerance mechanisms to handle edge cases, API errors, and logical divergence during consensus voting. This section analyzes failure modes encountered during benchmark evaluation and details system recovery safeguards.
+
+\subsection{Diagnostic Failure Taxonomy}
+
+Table~\ref{tab:failure_taxonomy} summarizes four primary failure categories identified during empirical testing.
+
+\begin{table}[htbp]
+\centering
+\caption{Diagnostic Failure Mode Taxonomy and Recovery Strategies.}
+\label{tab:failure_taxonomy}
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Failure Category} & \textbf{Root Cause Mechanics} & \textbf{System Mitigation Strategy} \\
+\midrule
+Domain Misclassification & \texttt{DomainAgent} assigns irrelevant specialties, leading downstream analysis agents to emphasize tangential clinical details. & Enforce upper domain caps ($K_q \le 5$, $K_o \le 2$); inject fallback general medicine perspective. \\
+Verification Stall & \texttt{VerifierAgent} enters an oscillating vote loop ($\text{YES} \leftrightarrow \text{NO}$) without achieving unanimous consensus. & Enforce strict loop limit ($t \le 3$); derive best-effort answer from final synthesis report ($R^{(3)}$). \\
+RAG Passage Noise & MedCPT returns retrieved passages that share lexical overlap with the query but lack relevant clinical guidance. & Truncate snippets to 300 characters; filter passages below similarity threshold; limit context to top $P=5$. \\
+Unparseable Formatting & Model returns conversational text lacking the required \texttt{Option: [Letter]} structure. & Apply secondary fallback regex matching (\texttt{\textbackslash b[A-E]\textbackslash b}); trigger automated retry loop. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Fault-Tolerant Circuit Breaker Pipeline}
+
+To prevent pipeline crashes during provider API outages or rate-limit events, MedRAGAgents implements a fault-tolerant circuit breaker pattern within \texttt{BaseAgent}.
+
+Figure~\ref{fig:circuit_breaker} illustrates the error handling and recovery pipeline.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  \node [monobox] (request) {API Invocation\\Request};
+  \node [monodiamond, right=1.2cm of request] (exec) {Provider Response\\Status?};
+  
+  \node [monobox, right=1.2cm of exec] (success) {Parse Output\\(\texttt{extract\_answer})};
+  \node [monodiamond, right=1.2cm of success] (valid) {Valid Option\\Format?};
+  
+  \node [monobox, right=1.2cm of valid] (return) {Return Prediction\\Record};
+  
+  \node [monobox, below=1.2cm of exec] (backoff) {Exponential Backoff\\$T_{\text{sleep}} = 2^{\text{attempt}}$ s};
+  \node [monobox, below=1.2cm of valid] (regex_fallback) {Apply Fallback Regex\\(\texttt{\textbackslash b[A-E]\textbackslash b})};
+
+  \draw [monoline] (request) -- (exec);
+  \draw [monoline] (exec) -- node [above] {Success} (success);
+  \draw [monoline] (exec) -- node [right] {Error 429} (backoff);
+  \draw [monoline] (backoff.west) -| (request.south);
+  
+  \draw [monoline] (success) -- (valid);
+  \draw [monoline] (valid) -- node [above] {Valid} (return);
+  \draw [monoline] (valid) -- node [right] {Invalid} (regex_fallback);
+  \draw [monoline] (regex_fallback.east) -| (return.south);
+\end{tikzpicture}%
+}
+\caption{Fault-Tolerant Circuit Breaker and Error Recovery Pipeline.}
+\label{fig:circuit_breaker}
+\end{figure}
+
+The error recovery system enforces three operational guarantees:
+\begin{enumerate}
+    \item \textbf{Exponential Backoff}: API rate-limit errors (HTTP 429) trigger up to three retry attempts with exponential backoff delays ($T_{\text{sleep}} = 2^0, 2^1, 2^2$ seconds).
+    \item \textbf{Dual-Stage Regex Parsing}: Secondary regex matching extracts isolated option letters if the primary \texttt{Option: [Letter]} pattern fails.
+    \item \textbf{Graceful Degradation}: If a subspecialty analysis fails after retries, the synthesis module proceeds using remaining available domain analyses, preventing pipeline-wide crashes.
+\end{enumerate}

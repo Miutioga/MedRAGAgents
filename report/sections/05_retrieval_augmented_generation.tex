@@ -1,0 +1,109 @@
+\section{Biomedical Retrieval-Augmented Generation (MedRAG)}
+\label{sec:retrieval_augmented_generation}
+
+Static parameter weights in generative foundation models cannot capture the breadth and specificity of biomedical literature. Without external evidence retrieval, models risk hallucinating pathological pathways or referencing out-of-date treatment standards. MedRAGAgents incorporates a dedicated biomedical Retrieval-Augmented Generation (MedRAG) module built on the MedCPT dense vector search architecture over a preprocessed medical textbook corpus.
+
+\subsection{Biomedical Corpus Architecture and Indexing}
+
+The primary retrieval store relies on the MedRAG Textbooks corpus, which aggregates standard medical reference texts across internal medicine, surgery, pediatrics, pathology, and pharmacology. 
+
+Table~\ref{tab:corpus_specs} details the structural properties of the indexed retrieval corpus.
+
+\begin{table}[htbp]
+\centering
+\caption{MedRAG Textbooks Vector Index Specifications.}
+\label{tab:corpus_specs}
+\small
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Corpus Metric / Parameter} & \textbf{Specification Detail} \\
+\midrule
+Source Collection & Standard USMLE Textbooks Corpus (MedRAG preprocessed) \\
+Total Document Passages ($N$) & $> 200,000$ discrete passages \\
+Chunking Methodology & Fixed-size chunking (512 tokens max per chunk, 64-token overlap) \\
+Query Embedding Architecture & \texttt{MedCPT-Query-Encoder} (768-dimensional output) \\
+Article Embedding Architecture & \texttt{MedCPT-Article-Encoder} (768-dimensional output) \\
+Vector Distance Metric & Cosine Similarity ($\cos(\theta)$) \\
+Retrieval Top-$K$ Budget & $K = 32$ passages per clinical query \\
+Context Summarization Top-$P$ & $P = 5$ passages injected into synthesis context \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{MedCPT Dense Vector Retrieval Engine}
+
+MedCPT employs a dual-encoder architecture tailored for biomedical text retrieval. Unlike generic sentence transformers, MedCPT models are contrastively pre-trained on hundreds of millions of PubMed search logs and article titles, aligning clinical search queries directly with relevant textbook passages.
+
+Figure~\ref{fig:dense_retrieval} illustrates the MedCPT dual-encoder retrieval pipeline.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  \node [monobox] (query) {Clinical Vignette\\Query ($q$)};
+  \node [monobox, below=1.2cm of query] (corpus) {Textbooks Corpus\\Passages ($c_i$)};
+  
+  \node [monobox, right=1.2cm of query] (q_enc) {\texttt{MedCPT-Query}\\Encoder};
+  \node [monobox, right=1.2cm of corpus] (d_enc) {\texttt{MedCPT-Article}\\Encoder};
+  
+  \node [monobox, right=1.2cm of q_enc] (q_vec) {Query Vector\\$\mathbf{v}_q \in \mathbb{R}^{768}$};
+  \node [monobox, right=1.2cm of d_enc] (d_vec) {Article Vectors\\$\mathbf{v}_{c_i} \in \mathbb{R}^{768}$};
+  
+  \node [monodiamond, right=1.5cm of q_vec, yshift=-0.8cm] (sim) {Cosine Similarity\\Top-32 Search};
+  \node [monobox, right=1.2cm of sim] (results) {Top-32 Passages\\$\mathcal{R}_{32}(q)$};
+
+  \draw [monoline] (query) -- (q_enc);
+  \draw [monoline] (corpus) -- (d_enc);
+  \draw [monoline] (q_enc) -- (q_vec);
+  \draw [monoline] (d_enc) -- (d_vec);
+  
+  \draw [monoline] (q_vec.east) -| (sim.north);
+  \draw [monoline] (d_vec.east) -| (sim.south);
+  \draw [monoline] (sim) -- (results);
+\end{tikzpicture}%
+}
+\caption{MedCPT Dual-Encoder Dense Vector Retrieval Pipeline.}
+\label{fig:dense_retrieval}
+\end{figure}
+
+The retrieval process proceeds in three stages:
+\begin{enumerate}
+    \item \textbf{Query Vector Encoding}: The clinical vignette $q$ is passed through the \texttt{MedCPT-Query-Encoder} to generate a 768-dimensional dense vector $\mathbf{v}_q$.
+    \item \textbf{Vector Index Search}: Dense vector similarity is computed across pre-indexed passage embeddings $\mathbf{v}_{c_i}$, extracting the Top-32 passages ($\mathcal{R}_{32}(q)$) sorted by cosine similarity score.
+    \item \textbf{Context Formatting}: High-scoring passages are formatted into structured text blocks containing document titles, passage text, and similarity metrics.
+\end{enumerate}
+
+\subsection{Context Injection and Evidence Fusion}
+
+Retrieved textbook passages must be integrated into the reasoning pipeline without exceeding prompt token budgets or introducing irrelevant noise. MedRAGAgents manages evidence injection at the synthesis stage via the \texttt{RAGAgent} interface.
+
+Figure~\ref{fig:context_injection} illustrates the context injection mechanism into the synthesis pipeline.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.0cm and 1.2cm, auto]
+  \node [monobox] (top32) {Top-32 Retrieved\\Passages ($\mathcal{R}_{32}$)};
+  \node [monobox, right=1.2cm of top32] (summarizer) {Passage Selection \&\\Format (\texttt{\_summarise})};
+  \node [monobox, right=1.2cm of summarizer] (short_mem) {Short-Term Memory\\Key: \texttt{"rag\_snippets"}};
+  
+  \node [monobox, below=1.2cm of short_mem] (synth_prompt) {\texttt{SynthesisAgent}\\Prompt Context};
+  \node [monobox, left=1.2cm of synth_prompt] (q_ana) {Specialty Analyses\\(Question + Options)};
+
+  \draw [monoline] (top32) -- (summarizer);
+  \draw [monoline] (summarizer) -- (short_mem);
+  \draw [monoline] (short_mem) -- (synth_prompt);
+  \draw [monoline] (q_ana) -- (synth_prompt);
+\end{tikzpicture}%
+}
+\caption{Context Injection and Knowledge Fusion Architecture.}
+\label{fig:context_injection}
+\end{figure}
+
+The retrieved snippets augment the synthesis context under a dedicated \texttt{RAG Evidence} key within the analysis dictionary:
+
+\begin{equation}
+    \text{Context}_{\text{RAG}} = \bigoplus_{p=1}^{P=5} \left[ \text{Title}_p \;\|\; \text{Snippet}_p[:300] \right]
+\end{equation}
+
+By truncating each passage to 300 characters and selecting the top $P=5$ snippets for direct prompt inclusion, the system incorporates factual textbook evidence while preserving token capacity for multi-agent reasoning.

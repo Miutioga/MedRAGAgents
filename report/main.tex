@@ -1,0 +1,159 @@
+\documentclass[11pt,a4paper]{article}
+
+% Font and Language Setup (XeLaTeX)
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% Geometry & Layout
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=14pt]{geometry}
+\linespread{1.15}
+
+% Mathematics
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+% Tables & Figures
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+% Page break behavior
+\raggedbottom
+
+% TikZ & Graphics
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, chains, matrix, fit, backgrounds, paths.ortho}
+\tikzset{
+  monobox/.style={draw=black, rectangle, minimum height=0.8cm, minimum width=2.4cm, align=center, font=\small, thick, fill=white},
+  monodiamond/.style={draw=black, diamond, aspect=1.8, align=center, font=\small, thick, fill=white},
+  monoline/.style={draw=black, ->, >=stealth, thick},
+  monodash/.style={draw=black, ->, >=stealth, dashed, thick},
+  monogroup/.style={draw=black, dashed, inner sep=0.3cm, font=\small\itshape, fill=white}
+}
+
+% Listings & Code
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray},
+  captionpos=b,
+  showstringspaces=false,
+  tabsize=2
+}
+
+% Headers & Footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small MedRAGAgents Technical Report}
+\rhead{\small Multi-Agent Biomedical RAG Architecture}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section Title Formatting
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\uppercase}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\itshape}{\thesubsubsection}{0.5em}{}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black,
+  pdfauthor={Senior Systems Architect},
+  pdftitle={MedRAGAgents: A Multi-Specialty Agentic RAG Architecture for Complex Medical Reasoning}
+}
+
+% Environments
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+  
+  {\Large\bfseries ACADEMIC AND INDUSTRIAL TECHNICAL SPECIFICATION\par}
+  \vspace{1.5cm}
+  
+  {\huge\bfseries MedRAGAgents: Architecture, Implementation, and Evaluation of a Multi-Specialty Agentic Retrieval-Augmented System for Medical Reasoning\par}
+  
+  \vspace{1.5cm}
+  {\Large\bfseries Project Technical Report \& System Specification\par}
+  
+  \vspace{2.0cm}
+  \textbf{Author:} Senior AI Systems Architect \& Clinical NLP Engineer\\
+  \textbf{Institution:} Department of Computer Science \& Software Engineering\\
+  \textbf{Target Domain:} Machine Learning in Security \& Biomedical Reasoning (UIT-SDH)\\
+  \textbf{Benchmark Target:} MedQA-USMLE Medical Board Examination Dataset\\
+  \textbf{Compiler Target:} XeLaTeX Standard Engine\\
+  \textbf{Date:} August 2026
+  
+  \vfill
+  
+  \begin{abstract}
+  \noindent Standard single-prompt foundation model architectures encounter severe cognitive bottlenecks, knowledge cutoff limitations, and domain hallucination when evaluating complex clinical vignettes requiring multi-disciplinary specialty reasoning. This report presents \textbf{MedRAGAgents}, a production-grade multi-agent medical reasoning architecture integrating domain-specialized decomposition, biomedical dense vector retrieval via MedCPT over a preprocessed textbook corpus, and a dual-layer memory infrastructure. MedRAGAgents structures clinical diagnostic inference across five discrete agent roles: Domain Classification (\texttt{DomainAgent}), Parallel Specialty Analysis (\texttt{AnalysisAgent}), Comprehensive Synthesis (\texttt{SynthesisAgent}), and Iterative Consensus Verification (\texttt{VerifierAgent}). To minimize redundant API transaction latencies and guarantee state isolation, the pipeline relies on an intra-turn in-RAM scratchpad (\texttt{ShortTermMemory}) paired with an inter-turn persistent SHA-256 canonical digest key-value cache (\texttt{LongTermMemory}). On the MedQA-USMLE benchmark dataset ($N=1,273$), the unified system architecture (Variant V3) yields substantial accuracy improvements over direct chain-of-thought baselines while maintaining an output formatting invalidity rate of $0.0\%$. We provide formal mathematical task definitions, full architectural specifications, 12 monochrome engineering diagrams, algorithmic listings, statistical power checks via 1,000-resample non-parametric bootstrap confidence intervals, McNemar significance testing, failure mode taxonomies, and operational deployment guidelines.
+  \end{abstract}
+  
+\end{titlepage}
+
+% Table of Contents
+\newpage
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+\clearpage
+
+% Include Sections
+\clearpage
+\input{sections/01_introduction.tex}
+\clearpage
+\input{sections/02_problem_formulation.tex}
+\clearpage
+\input{sections/03_architecture_overview.tex}
+\clearpage
+\input{sections/04_multi_agent_engine.tex}
+\clearpage
+\input{sections/05_retrieval_augmented_generation.tex}
+\clearpage
+\input{sections/06_dual_layer_memory.tex}
+\clearpage
+\input{sections/07_system_variants.tex}
+\clearpage
+\input{sections/08_implementation_details.tex}
+\clearpage
+\input{sections/09_statistical_methodology.tex}
+\clearpage
+\input{sections/10_empirical_results.tex}
+\clearpage
+\input{sections/11_failure_analysis.tex}
+\clearpage
+\input{sections/12_operational_engineering.tex}
+\clearpage
+\input{sections/13_tradeoffs_and_future.tex}
+\clearpage
+\input{sections/14_conclusion.tex}
+\clearpage
+\input{sections/15_appendix.tex}
+
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
