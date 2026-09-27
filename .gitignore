@@ -44,3 +44,6 @@ Thumbs.db
 
 # Large datasets and chunks
 corpus/textbooks/chunk/*.jsonl
+
+# Secrets
+*token*.txt
